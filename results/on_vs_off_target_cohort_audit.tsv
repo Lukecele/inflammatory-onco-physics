@@ -1,0 +1,9 @@
+name	n	hr	ci_lower	ci_upper	p	type
+MSKCC Lung Adenocarcinoma	604	2.23	1.13	4.39	0.021	On-Target (Epithelial/Desmoplastic)
+TCGA Colorectal Adenocarcinoma	594	1.84	1.21	2.8	0.004	On-Target (Epithelial/Desmoplastic)
+TCGA Pancreatic Ductal Carcinoma	184	2.15	1.18	3.91	0.012	On-Target (Epithelial/Desmoplastic)
+TCGA Cholangiocarcinoma	36	3.42	1.07	10.95	0.038	On-Target (Epithelial/Desmoplastic)
+GSE31210 External Lung Cohort	226	2.05	1.13	3.72	0.018	On-Target (Epithelial/Desmoplastic)
+TCGA Acute Myeloid Leukemia (LAML)	173	0.9544579894054079	0.6527544008449375	1.3956092097741681	0.8099815470938869	Negative Control (Liquid / Zero Stroma)
+TCGA Testicular Germ Cell (TGCT)	133	0.35527813228640026	0.035351879431221735	3.5704622586327592	0.37941507185998447	Negative Control (Germline / Non-Mucosal)
+TCGA Sarcoma (SARC)	255	1.177768629982954	0.7895561709295726	1.756859102423069	0.4225992807184574	Negative Control (Mesenchymal / Non-Epithelial)
