@@ -1,0 +1,19 @@
+Pseudonym_ID	Clinical_Category	Variant_Class	Sensory_Disruption_Score	Inflammatory_Stress_Score	BSIR_Index	Risk_Stratification	Color	Plot_Label
+CHOL-01	sindrome di Alagille	JAG1 Hypomorphic Missense	1.8	2.0	3.6	Mild (Favorable Course / High Native Liver Survival)	#0284c7	CHOL-01: JAG1 Hypomorphic Missense
+CHOL-02	sindrome di Alagille	JAG1 Structural Deletion (LoF)	4.5	1.8	8.1	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-02: JAG1 Structural Deletion (LoF)
+CHOL-03	sindrome di Alagille	JAG1 Canonical Splicing NMD	4.2	3.5999999999999996	15.12	Severe / Extreme (Aggressive Fibrogenesis & Neoplastic Risk)	#e11d48	CHOL-03: JAG1 Canonical Splicing NMD
+CHOL-04	sindrome di Alagille	Notch Pathway Dysregulation	3.5	3.5999999999999996	12.599999999999998	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-04: Notch Pathway Dysregulation
+CHOL-05	Sindrome di Alagille senza coinvolgimento epatico	Notch Pathway Dysregulation	3.5	3.5999999999999996	12.599999999999998	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-05: Notch Pathway Dysregulation
+CHOL-06	epatite autoimmune di tipo I associata a colangite sclerosante.	Autoimmune Parenchymal Insult	2.0	5.0	10.0	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-06: Autoimmune Parenchymal Insult
+CHOL-07	Epatite autoimmune associata a colangite sclerosante. Rettocolite ulcerosa associata	Autoimmune Parenchymal Insult	2.0	3.2	6.4	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-07: Autoimmune Parenchymal Insult
+CHOL-08	Colangite sclerosante autoimmune	Autoimmune Parenchymal Insult	2.0	5.0	10.0	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-08: Autoimmune Parenchymal Insult
+CHOL-09	PFIC IV	Unclassified Cholestatic Profile	2.8	4.6	12.879999999999999	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-09: Unclassified Cholestatic Profile
+CHOL-10	PFIC 10	Unclassified Cholestatic Profile	2.8	3.5999999999999996	10.079999999999998	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-10: Unclassified Cholestatic Profile
+CHOL-11	Difetto di coniugazione degli acidi biliari	Unclassified Cholestatic Profile	2.8	2.8	7.839999999999999	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-11: Unclassified Cholestatic Profile
+CHOL-12	Atresia biliare	Ciliary/Ductal Gene Defect	4.8	3.8	18.24	Severe / Extreme (Aggressive Fibrogenesis & Neoplastic Risk)	#e11d48	CHOL-12: Ciliary/Ductal Gene Defect
+CHOL-13	Colestasi	JAG1 Canonical Splicing NMD	4.2	3.5999999999999996	15.12	Severe / Extreme (Aggressive Fibrogenesis & Neoplastic Risk)	#e11d48	CHOL-13: JAG1 Canonical Splicing NMD
+CHOL-14	epatite autoimmune di tipo I, celiachia	Autoimmune Parenchymal Insult	2.0	5.0	10.0	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-14: Autoimmune Parenchymal Insult
+CHOL-15	epatite autoimmune di tipo II	Autoimmune Parenchymal Insult	2.0	3.2	6.4	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-15: Autoimmune Parenchymal Insult
+CHOL-16	epatite autoimmune sieronegativa	Autoimmune Parenchymal Insult	2.0	5.0	10.0	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-16: Autoimmune Parenchymal Insult
+CHOL-17	Epatite autoimmune e tiroidite	Autoimmune Parenchymal Insult	2.0	3.2	6.4	Moderate-High (Early Cholestasis & Ductal Paucity)	#f59e0b	CHOL-17: Autoimmune Parenchymal Insult
+CHOL-18	Epatopatia colestatica	Ciliary/Ductal Gene Defect	4.8	4.6	22.08	Severe / Extreme (Aggressive Fibrogenesis & Neoplastic Risk)	#e11d48	CHOL-18: Ciliary/Ductal Gene Defect

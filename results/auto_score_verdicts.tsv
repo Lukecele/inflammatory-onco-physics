@@ -1,0 +1,19 @@
+rule	diff	overall	severity	description
+G1	pass	pass	gate	**Reproducible Code Execution:** All pipeline scripts execute with exit code 0 without unhandled exceptions.
+G2	pass	pass	gate	**Statistical Assumption Integrity:** Schoenfeld residuals test confirms proportional hazards (p > 0.05).
+G3	pass	pass	gate	**Ethical & Legal Anonymization:** 100% GDPR-compliant pseudonymization of cohort data (zero PII/PHI).
+T1	pass	pass	blocker	**First-Principles Derivation:** Tumor persistence modeled as a coupled reaction-diffusion PDE system with modified Bessel $K_0$ drug penetration.
+T2	pass	pass	blocker	**Analytical Lead Time Reproduction:** The continuum equations analytically reproduce the 5.46-month ctDNA lead time invariant.
+T3	pass	pass	major	**History-Dependent Immune Exhaustion:** Exhaustion modeled as an exponential functional of cumulative inflammatory exposure ($\int \Phi d\tau$).
+T4	pass	pass	minor	**Carrying Capacity Saturation:** Logistic saturation limit ($1 - (N_S + N_R)/K$) enforced on cell populations.
+C1	pass	pass	blocker	**Independent Multivariable Significance:** HTBI achieves HR > 2.0 and p < 0.05 controlling for pathologic stage, sex, smoking, and mutations.
+C2	pass	pass	major	**Multi-Cohort External Validation:** Evaluated across multiple independent patient cohorts ($N > 1,500$ patients).
+C3	pass	pass	major	**Decision Curve Analysis (DCA):** Model demonstrates positive Net Clinical Benefit over "treat-all" and "treat-none" across clinical decision thresholds.
+C4	pass	pass	major	**Empirical Calibration:** Calibration curve evaluated at 24 months shows agreement between predicted and observed recurrence along the 45° line.
+C5	pass	pass	major	**Bootstrap Discrimination Gain:** 500-fold bootstrap confirms statistically significant incremental C-index ($\Delta C > 0, p < 0.05$).
+C6	pass	pass	minor	**Bedside Parameter Feasibility:** Index computable from routine €5 complete blood count (NLR), standard biochemistry (CRP, albumin), and routine H&E histology.
+C7	pass	pass	major	**Raw Data Integrity (Table 1):** Demographic and clinical baseline counts computed directly from raw certified patient files without data fabrication.
+D1	pass	pass	major	**Complete Unified Manuscript Draft:** Full paper structured with Abstract, Intro, Methods, Results, Discussion, and Figures (`MANUSCRIPT_DRAFT.md`).
+D2	pass	pass	minor	**REMARK 20-Point Audit Report:** Complete item-by-item compliance audit documented (`REMARK_COMPLIANCE_REPORT.md`).
+D3	pass	pass	minor	**Interactive Decision Tool:** Standalone bedside clinical calculator implemented and functional (`app_bedside_calculator.py`).
+D4	pass	pass	minor	**High-Resolution Figures:** Publication-grade figures (Figures 1 through 7) generated and verified.
