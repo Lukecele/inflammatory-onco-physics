@@ -14,27 +14,34 @@ def calculate_htbi(
     crp_mg_l: float,
     albumin_g_l: float,
     desmoplasia: str = "Moderate",
-    tils_percent: float = 15.0
+    tils_percent: float = 15.0,
+    bmi: float = 24.0,
+    smoking_status: str = "Never"
 ):
     # 1. Proliferation / Seed Aggressiveness from Grade & Stage
     grade_factors = {1: 0.7, 2: 1.0, 3: 1.35}
     r_S = 0.40 * grade_factors.get(histology_grade, 1.0) * (1.0 + 0.3 * (stage - 1))
     
-    # 2. Stromal Transport Resistance Factor
-    desmo_factors = {"Low": 1.0, "Moderate": 0.75, "High": 0.45}
+    # 2. Stromal Transport Resistance Factor (Dense Desmoplasia restricts drug penetration)
+    desmo_factors = {"None": 1.2, "Low": 1.0, "Moderate": 0.75, "High": 0.45}
     transport = desmo_factors.get(desmoplasia, 0.75)
     
     # 3. Host Immune Surveillance Capacity
     E_0 = 0.05 * (tils_percent / 20.0)
     
-    # 4. Systemic Inflammatory Burden
+    # 4. Systemic Host Inflammatory Burden (Coupling Lab Tests + Lifestyle/Metabolic Stress)
     norm_nlr = nlr / 2.0
     norm_crp = crp_mg_l / 2.5
     norm_alb = 40.0 / max(albumin_g_l, 10.0)
-    soil_exhaustion = 1.0 + 0.25 * norm_nlr * (norm_crp * norm_alb)
     
-    # 5. Composite HTBI
-    seed = r_S / transport
+    # Adipose tissue secretome (Visceral fat IL-6/TNF-alpha) and Tobacco oxidative stress
+    bmi_factor = 1.0 + 0.15 * max(0.0, (bmi - 25.0) / 5.0) # Penalty for overweight / obesity
+    smoke_factor = 1.35 if smoking_status.lower() in ["ever", "current", "former", "yes"] else 1.0
+    
+    soil_exhaustion = 1.0 + 0.25 * norm_nlr * (norm_crp * norm_alb) * bmi_factor * smoke_factor
+    
+    # 5. Composite HTBI (Decoupled: If desmoplasia is None, tissue mechanics nullify the alarm)
+    seed = (r_S / transport) if desmoplasia != "None" else 0.05
     soil = E_0 / soil_exhaustion
     htbi = seed / max(soil, 1e-5)
     
@@ -68,8 +75,14 @@ if __name__ == "__main__":
     alb_in = 35.0
     desmo_in = "High"
     tils_in = 8.0
+    bmi_in = 31.2 # Obese Class I
+    smoking_in = "Ever" # Former heavy smoker
     
-    res = calculate_htbi(stage_in, grade_in, nlr_in, crp_in, alb_in, desmo_in, tils_in)
+    res = calculate_htbi(
+        stage_in, grade_in, nlr_in, crp_in, alb_in,
+        desmoplasia=desmo_in, tils_percent=tils_in,
+        bmi=bmi_in, smoking_status=smoking_in
+    )
     
     print(f"\n[INPUT PATIENT CLINICAL PARAMETERS]")
     print(f" • Pathologic TNM Stage:       Stage {stage_in}")
@@ -77,6 +90,8 @@ if __name__ == "__main__":
     print(f" • Complete Blood Count NLR:   {nlr_in:.1f} (Normal < 2.0)")
     print(f" • Serum hs-CRP:               {crp_in:.1f} mg/L (Normal < 2.5)")
     print(f" • Serum Albumin:              {alb_in:.1f} g/L (Normal 35-50)")
+    print(f" • Body Mass Index (BMI):      {bmi_in:.1f} kg/m² (Obesity Class I)")
+    print(f" • Smoking History:            {smoking_in}")
     print(f" • Stromal Desmoplasia:        {desmo_in}")
     print(f" • Infiltrating TILs:          {tils_in:.1f}%\n")
     
