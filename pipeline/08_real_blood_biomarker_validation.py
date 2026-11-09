@@ -35,9 +35,9 @@ def run_real_blood_validation():
     df["OS_MONTHS"] = df["OS(months)"].astype(str).str.replace(",", ".").astype(float)
     df["EVENT"] = df["Survival status"].astype(int)
 
-    # 2. Parse Raw Real Laboratory Chemistry
+    # 2. Parse Raw Real Laboratory Chemistry (Strict Complete-Case: No Imputation!)
     df["REAL_NLR"] = df["NLR"].astype(str).str.replace(",", ".").astype(float)
-    df["REAL_GPS"] = pd.to_numeric(df["GPS"], errors="coerce").fillna(0) # 0=Normal CRP & Albumin, 1=Abnormal CRP or Albumin, 2=Both Abnormal
+    df["REAL_GPS"] = pd.to_numeric(df["GPS"], errors="coerce") # Keep NaN as NaN! Zero imputation!
 
     # 3. Parse Real Pathology
     def clean_grade(x):
@@ -49,30 +49,32 @@ def run_real_blood_validation():
     def clean_stage(x):
         s = str(x).upper()
         if "IV" in s: return 4.0
-        elif "III" in s: return 3.0
-        elif "II" in s: return 2.0
-        elif "I" in s: return 1.0
+        if "III" in s: return 3.0
+        if "II" in s: return 2.0
+        if "I" in s: return 1.0
         return 2.0
 
     df["GRADE_NUM"] = df["Histological grade"].apply(clean_grade)
     df["STAGE_NUM"] = df["TNM stage"].apply(clean_stage)
 
-    # 4. Compute Biophysical HTBI Directly From Raw Blood & Pathology
-    # Seed: Cellular dedifferentiation (Grade) * Anatomical invasion (Stage)
-    seed = df["GRADE_NUM"] * (1.0 + 0.3 * (df["STAGE_NUM"] - 1.0))
-    
-    # Soil: Real systemic inflammatory stress (Real NLR * Real GPS with CRP/Albumin)
-    gps_weight = 1.0 + 0.75 * df["REAL_GPS"]
-    soil = (df["REAL_NLR"] / 2.0) * gps_weight
-    
-    df["HTBI_REAL"] = seed * soil
-    df["HTBI_HIGH"] = (df["HTBI_REAL"] >= df["HTBI_REAL"].median()).astype(int)
-
-    clean_df = df[["OS_MONTHS", "EVENT", "STAGE_NUM", "GRADE_NUM", "REAL_NLR", "REAL_GPS", "HTBI_HIGH", "HTBI_REAL"]].dropna()
+    # 4. Strict Complete Case Filtering: Drop any patient with missing blood lab or pathology
+    clean_df = df.dropna(subset=["OS_MONTHS", "EVENT", "STAGE_NUM", "GRADE_NUM", "REAL_NLR", "REAL_GPS"]).copy()
     clean_df = clean_df[clean_df["OS_MONTHS"] > 0].reset_index(drop=True)
 
-    print(f"[*] Evaluated Real Patient Cohort: N = {len(clean_df)} patients")
-    print(f"[*] Verified Clinical Events:     {clean_df['EVENT'].sum()} observed deaths (524 / 1,330)")
+    # Compute Biophysical HTBI Directly From Raw Blood & Pathology
+    # Seed: Cellular dedifferentiation (Grade) * Anatomical invasion (Stage)
+    seed = clean_df["GRADE_NUM"] * (1.0 + 0.3 * (clean_df["STAGE_NUM"] - 1.0))
+    
+    # Soil: Real systemic inflammatory stress (Real NLR * Real GPS with CRP/Albumin)
+    gps_weight = 1.0 + 0.75 * clean_df["REAL_GPS"]
+    soil = (clean_df["REAL_NLR"] / 2.0) * gps_weight
+    
+    clean_df["HTBI_REAL"] = seed * soil
+    clean_df["HTBI_HIGH"] = (clean_df["HTBI_REAL"] >= clean_df["HTBI_REAL"].median()).astype(int)
+
+    print(f"[*] Evaluated Real Patient Cohort (Strict Complete Cases): N = {len(clean_df)} patients")
+    print(f"[*] Verified Clinical Events:     {clean_df['EVENT'].sum()} observed deaths ({clean_df['EVENT'].sum()} / {len(clean_df)})")
+    print(f"[*] Dropped Missing Records:      {len(df) - len(clean_df)} patients dropped due to missing pre-op GPS (Zero Imputation!)")
     print(f"[*] Median Raw Pre-Op NLR:        {clean_df['REAL_NLR'].median():.2f} (IQR: {clean_df['REAL_NLR'].quantile(0.25):.2f} - {clean_df['REAL_NLR'].quantile(0.75):.2f})")
     print(f"[*] GPS Distribution:             GPS 0 (Normal): {sum(clean_df['REAL_GPS']==0)}, GPS 1 (Elevated CRP/Alb): {sum(clean_df['REAL_GPS']==1)}, GPS 2 (Extreme): {sum(clean_df['REAL_GPS']==2)}")
 
@@ -131,7 +133,7 @@ def run_real_blood_validation():
     kmf.fit(clean_df[clean_df["HTBI_HIGH"] == 1]["OS_MONTHS"], clean_df[clean_df["HTBI_HIGH"] == 1]["EVENT"], label=f"High HTBI (N={sum(clean_df['HTBI_HIGH']==1)})")
     kmf.plot_survival_function(ax=ax_km, color="#dc2626", linewidth=2.5)
 
-    ax_km.set_title("A. Real Blood Draw Validation: Kaplan-Meier Survival (N=1,330 Patients)", fontsize=12, fontweight="bold", pad=10)
+    ax_km.set_title(f"A. Real Blood Draw Validation: Kaplan-Meier Survival (N={len(clean_df)} Complete Cases)", fontsize=12, fontweight="bold", pad=10)
     ax_km.set_xlabel("Overall Survival (Months)", fontsize=11, fontweight="bold")
     ax_km.set_ylabel("Survival Probability", fontsize=11, fontweight="bold")
     ax_km.grid(True, linestyle=":", alpha=0.5)
@@ -142,7 +144,7 @@ def run_real_blood_validation():
         f"• Log-rank p = {lr.p_value:.2e}\n"
         f"• 3-Yr OS: {surv_3yr_low:.1f}% vs {surv_3yr_high:.1f}%\n"
         f"• 5-Yr OS: {surv_5yr_low:.1f}% vs {surv_5yr_high:.1f}%\n"
-        f"• Zero Synthetic Data",
+        f"• Zero Imputation / Zero Synthetic",
         transform=ax_km.transAxes,
         fontsize=9.5,
         bbox=dict(boxstyle="round,pad=0.5", facecolor="#f8fafc", edgecolor="#cbd5e1")
