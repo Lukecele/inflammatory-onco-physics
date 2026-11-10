@@ -2,7 +2,7 @@
 **Authors:** Luca Celebrano, Antigravity AI  
 **Date:** November 2026  
 **Status:** Foundational Monograph & Working Theory  
-**Repository:** `/home/luca/inflammatory-onco-physics`
+**Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`
 
 ---
 

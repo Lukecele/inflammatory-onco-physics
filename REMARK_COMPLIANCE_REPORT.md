@@ -2,7 +2,7 @@
 ## The Host-Tumor Biophysical Index (HTBI) for Cancer Recurrence Stratification
 
 **Reporting Standard:** REMARK Checklist (*Altman DG, McShane LM, Sauerbrei W, Taube SE, Cavenagh MM. Reporting recommendations for tumor marker prognostic studies (REMARK). J Natl Cancer Inst. 2005;97(16):1180-1184.*)  
-**Project Repository:** `/home/luca/inflammatory-onco-physics`  
+**Project Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
 **Authors:** Luca Celebrano, Antigravity AI  
 **Date:** November 2026  
 

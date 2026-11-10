@@ -77,7 +77,7 @@ def run_pancancer_analysis():
     print("\n--- [1/4] Processing Lung Adenocarcinoma (MSKCC 2020) ---")
     lung_path = REPO_ROOT / "data" / "mskcc_2020_real_cohort.csv"
     if not lung_path.exists():
-        lung_path = Path("/home/luca/mskcc-cohort-hf/mskcc_2020_real_cohort.csv")
+        raise FileNotFoundError(f"Missing clinical cohort at: {lung_path}")
     df_lung = pd.read_csv(lung_path)
 
     def map_lung_histo(val):
@@ -203,10 +203,7 @@ def run_pancancer_analysis():
     plt.close()
     print(f"\n[✔] Pan-Cancer validation complete! Figure saved at: {output_png}")
 
-    brain_dir = Path("/home/luca/.gemini/antigravity-cli/brain/84f7c109-72c7-4a34-82e0-4199795002f0")
-    if brain_dir.exists():
-        os.system(f"cp {output_png} {brain_dir / 'figure_3_pancancer_validation.png'}")
-        print(f"[✔] Synced to brain artifacts")
+
 
 if __name__ == "__main__":
     run_pancancer_analysis()

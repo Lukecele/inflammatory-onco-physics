@@ -2,7 +2,7 @@
 ## Stratified by Host-Tumor Biophysical Index (HTBI)
 
 **Data Source:** Memorial Sloan Kettering Cancer Center (MSKCC) Real-World Cohort  
-**File:** `/home/luca/mskcc-cohort-hf/mskcc_2020_real_cohort.csv`  
+**File:** `data/mskcc_2020_real_cohort.csv`  
 **Statistical Testing:** Pearson's $\chi^2$ test for categorical variables; Mann-Whitney $U$ test for continuous variables.  
 
 | Clinical Characteristic | Overall Cohort (N = 604) | Low HTBI (N = 172) | High HTBI (N = 432) | Statistical p-value |

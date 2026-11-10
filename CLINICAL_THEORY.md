@@ -3,7 +3,7 @@
 
 **Authors:** Luca Celebrano, Antigravity AI  
 **Affiliation:** School of Medicine, Università degli Studi di Napoli Federico II / TIGEM  
-**Repository:** `/home/luca/inflammatory-onco-physics`  
+**Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
 **Status:** Working Monograph & Theoretical Architecture  
 **Date:** November 2026  
 

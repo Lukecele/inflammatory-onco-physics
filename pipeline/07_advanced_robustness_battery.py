@@ -31,7 +31,7 @@ def run_advanced_robustness_battery():
     # Load MSKCC Discovery Cohort
     csv_path = REPO_ROOT / "data" / "mskcc_2020_real_cohort.csv"
     if not csv_path.exists():
-        csv_path = Path("/home/luca/mskcc-cohort-hf/mskcc_2020_real_cohort.csv")
+        raise FileNotFoundError(f"Missing clinical cohort at: {csv_path}")
     df = pd.read_csv(csv_path)
 
     def map_histology_risk(val):
@@ -340,10 +340,6 @@ def run_advanced_robustness_battery():
     plt.close()
     print(f"[✔] Figure 10 saved to: {out_fig10}")
 
-    brain_dir = Path("/home/luca/.gemini/antigravity-cli/brain/84f7c109-72c7-4a34-82e0-4199795002f0")
-    if brain_dir.exists():
-        os.system(f"cp {out_fig10} {brain_dir / 'figure_10_clinical_robustness_master.png'}")
-        print(f"[✔] Synced to brain artifacts")
     print("=" * 80)
 
 if __name__ == "__main__":

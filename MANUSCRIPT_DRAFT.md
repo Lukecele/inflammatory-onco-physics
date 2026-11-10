@@ -7,7 +7,7 @@ $^{2}$Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy
 
 **Target Journal:** *The Lancet Oncology* / *Journal of Clinical Oncology* / *Nature Communications*  
 **Format:** Original Article (REMARK-Compliant)  
-**Study Repository (Local Embargo):** `/home/luca/inflammatory-onco-physics`  
+**Study Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
 
 ---
 
@@ -104,10 +104,10 @@ In the discovery cohort of 604 patients (**Table 1**), multivariate Cox regressi
 In 500-fold bootstrap resampling (**Figure 5**), Harrell's C-index improved significantly from 0.698 to 0.721 ($\Delta C = +0.023, p = 0.030$), with 2-year AUC reaching 0.785. Decision Curve Analysis (**Figure 7A**) demonstrated robust Net Clinical Benefit across decision thresholds $p_t \in [0.05, 0.40]$. Pooled random-effects meta-analysis across 1,861 patients (**Figure 7C**) yielded a summary **Pooled $HR = 1.94$ ($95\%\text{ CI: } 1.48 - 2.54, p < 10^{-5}, I^2 = 12.4\%$)**.
 
 ### 3.5. Application to Biliary Disease: The CHOL-OMICS Genetic Landscape
-Integrating the 18 clinical-genetic classes from the real-world CHOL-OMICS study (**Figure 6**, [TSV Data](file:///home/luca/inflammatory-onco-physics/data/chol_omics_anonymized_stratification.tsv)) demonstrated that genetic mutations segregate along our biophysical phase space: hypomorphic alleles (*JAG1* missense, `CHOL-01`) maintain sensory boundary signaling (BSIR = 3.6, favorable course), whereas structural deletions (`CHOL-02`, LoF haploinsufficiency) and ciliary/junctional defects (`CHOL-12`, `CHOL-18`, *PKHD1*, *TJP2*) drive extreme fibrogenic and neoplastic risk (BSIR up to 22.1).
+Integrating the 18 clinical-genetic classes from the real-world CHOL-OMICS study (**Figure 6**, [TSV Data](data/chol_omics_anonymized_stratification.tsv)) demonstrated that genetic mutations segregate along our biophysical phase space: hypomorphic alleles (*JAG1* missense, `CHOL-01`) maintain sensory boundary signaling (BSIR = 3.6, favorable course), whereas structural deletions (`CHOL-02`, LoF haploinsufficiency) and ciliary/junctional defects (`CHOL-12`, `CHOL-18`, *PKHD1*, *TJP2*) drive extreme fibrogenic and neoplastic risk (BSIR up to 22.1).
 
 ### 3.6. Proof by Contradiction: Negative Controls Falsification
-To verify that the biophysical index does not represent a statistical artifact, we tested the model against real-world cohorts of malignancies where epithelial boundaries, primary cilia, and desmoplastic stroma are absent (**Figure 9**, [TSV Data](file:///home/luca/inflammatory-onco-physics/results/on_vs_off_target_cohort_audit.tsv)):
+To verify that the biophysical index does not represent a statistical artifact, we tested the model against real-world cohorts of malignancies where epithelial boundaries, primary cilia, and desmoplastic stroma are absent (**Figure 9**, [TSV Data](results/on_vs_off_target_cohort_audit.tsv)):
 * **Acute Myeloid Leukemia (TCGA-LAML, $N=173$):** Circulating liquid neoplasm with zero basement membrane and zero stroma. The model completely failed (**$HR = 0.95, 95\%\text{ CI: } 0.65 - 1.40, \mathbf{p = 0.810}$**).
 * **Testicular Germ Cell Tumor (TCGA-TGCT, $N=133$):** Primordial germline non-mucosal neoplasm. The model completely failed (**$HR = 0.36, 95\%\text{ CI: } 0.04 - 3.57, \mathbf{p = 0.379}$**).
 * **Soft-Tissue Sarcoma (TCGA-SARC, $N=255$):** Mesenchymal non-epithelial neoplasm. The model completely failed (**$HR = 1.18, 95\%\text{ CI: } 0.79 - 1.76, \mathbf{p = 0.423}$**).
@@ -117,7 +117,7 @@ These controlled failures validate Karl Popper's falsification criterion: the ph
 ### 3.7. Competing Risks Separation & Demographic Subgroup Homogeneity
 In the MSKCC cohort ($N=604$), we addressed competing risks using the non-parametric Aalen-Johansen estimator (**Figure 10B**). For cancer recurrence (Event 1), the Cumulative Incidence Function (CIF) diverged significantly between High and Low HTBI ($\mathbf{p = 0.001}$). In sharp contrast, for competing non-cancer deaths without recurrence (Event 2), CIF trajectories were completely flat and overlapping ($\mathbf{p = 0.72}$), proving that HTBI is cancer-specific and does not confound geriatric or cardiovascular frailty.
 
-In subgroup stratification (**Figure 10A**, [TSV Data](file:///home/luca/inflammatory-onco-physics/results/subgroup_and_competing_risks_audit.tsv)), HTBI remained strongly predictive across all strata:
+In subgroup stratification (**Figure 10A**, [TSV Data](results/subgroup_and_competing_risks_audit.tsv)), HTBI remained strongly predictive across all strata:
 * Ever-Smokers ($N=466$): $HR = 7.12$ ($95\%\text{ CI: } 1.74 - 29.05, p = 0.0062$)
 * Never-Smokers ($N=138$): $HR = 4.59$ ($95\%\text{ CI: } 2.08 - 10.13, p = 0.0002$)
 * Female Patients ($N=402$): $HR = 2.61$ ($95\%\text{ CI: } 1.36 - 5.00, p = 0.0039$)
@@ -150,7 +150,7 @@ The findings presented here resolve several long-standing paradoxes in clinical 
 Primary cilia loss (via SIRT1/HDAC6 deciliation in cholangiocytes and bronchial epithelium) represents part of a broader phenomenon: **Cellular Sensory Decoupling**. When chronic host inflammation destroys cellular boundary antennae (primary cilia, E-cadherin, tight junctions $TJP2$), the cell loses its multicellular contact inhibition and organellar mechanotransduction constraints, defaulting to an atavistic unicellular survival program (Warburg effect, EMT, autonomous proliferation, and persister condensation).
 
 ### Immediate Bedside Translational Feasibility
-Crucially, this framework is immediately actionable. It does not require multi-thousand-dollar experimental platforms: it synthesizes the €5 complete blood count (NLR), routine hepatic biochemistry (CRP, albumin), Body Mass Index (BMI), smoking history, and routine surgical pathology reports (histological grading and desmoplasia) into an objective risk score via the validated bedside calculator ([`app_bedside_calculator.py`](file:///home/luca/inflammatory-onco-physics/app_bedside_calculator.py)).
+Crucially, this framework is immediately actionable. It does not require multi-thousand-dollar experimental platforms: it synthesizes the €5 complete blood count (NLR), routine hepatic biochemistry (CRP, albumin), Body Mass Index (BMI), smoking history, and routine surgical pathology reports (histological grading and desmoplasia) into an objective risk score via the validated bedside calculator ([`app_bedside_calculator.py`](app_bedside_calculator.py)).
 
 ---
 
