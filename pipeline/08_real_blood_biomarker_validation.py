@@ -106,16 +106,16 @@ def run_real_blood_validation():
     print(f" • HTBI Hazard Ratio:  HR = {hr:.3f} (95% CI: {ci[0]:.3f} - {ci[1]:.3f})")
     print(f" • Statistical p-value: p = {p_val:.4e}")
 
-    # Continuous Cox model
+    # Continuous Cox model (Controlling for TNM Stage; Grade is already incorporated into the Seed domain of HTBI_REAL)
     cph_cont = CoxPHFitter()
     cph_cont.fit(
-        clean_df[["OS_MONTHS", "EVENT", "STAGE_NUM", "GRADE_NUM", "HTBI_REAL"]],
+        clean_df[["OS_MONTHS", "EVENT", "STAGE_NUM", "HTBI_REAL"]],
         duration_col="OS_MONTHS", event_col="EVENT"
     )
     hr_c = np.exp(cph_cont.params_["HTBI_REAL"])
     ci_c = np.exp(cph_cont.confidence_intervals_.loc["HTBI_REAL"].values)
     p_val_c = cph_cont.summary.loc["HTBI_REAL", "p"]
-    print(f"[✔] Multivariate Cox Regression (Continuous HTBI, Controlling for TNM Stage and Grade):")
+    print(f"[✔] Multivariate Cox Regression (Continuous HTBI, Controlling for TNM Stage):")
     print(f" • HTBI Hazard Ratio:  HR = {hr_c:.3f} (95% CI: {ci_c[0]:.3f} - {ci_c[1]:.3f})")
     print(f" • Statistical p-value: p = {p_val_c:.4e}")
 

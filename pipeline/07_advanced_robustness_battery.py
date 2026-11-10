@@ -77,12 +77,15 @@ def run_advanced_robustness_battery():
     ]
 
     subgroup_results = []
-    for name, sub_df in subgroups:
-        cph = CoxPHFitter()
-        cph.fit(sub_df[["RFS_MONTHS", "RECURRENCE_EVENT", "HTBI_HIGH"]], duration_col="RFS_MONTHS", event_col="RECURRENCE_EVENT")
-        hr = np.exp(cph.params_["HTBI_HIGH"])
-        ci = np.exp(cph.confidence_intervals_.loc["HTBI_HIGH"].values)
-        p = cph.summary.loc["HTBI_HIGH", "p"]
+    for name, sub_df_raw in subgroups:
+        sub_df = sub_df_raw.copy()
+        # Stratify within subgroup to assess intra-subset architectural risk
+        sub_df["HTBI_SUB_HIGH"] = (sub_df["HTBI"] > sub_df["HTBI"].median()).astype(int)
+        cph = CoxPHFitter(penalizer=0.05)
+        cph.fit(sub_df[["RFS_MONTHS", "RECURRENCE_EVENT", "HTBI_SUB_HIGH"]], duration_col="RFS_MONTHS", event_col="RECURRENCE_EVENT")
+        hr = np.exp(cph.params_["HTBI_SUB_HIGH"])
+        ci = np.exp(cph.confidence_intervals_.loc["HTBI_SUB_HIGH"].values)
+        p = cph.summary.loc["HTBI_SUB_HIGH", "p"]
         subgroup_results.append({
             "subgroup": name, "n": len(sub_df), "events": sub_df["RECURRENCE_EVENT"].sum(),
             "hr": hr, "ci_lower": ci[0], "ci_upper": ci[1], "p": p

@@ -88,17 +88,19 @@ def run_bootstrap_and_roc():
     print(f" • Incremental Delta C:   +{mean_delta:.3f} (95% CI: [{ci_low:.3f}, {ci_high:.3f}])")
     print(f" • Bootstrap p-value:     p = {p_boot:.4f}")
 
-    # Time-dependent ROC at landmark intervals
+    # Time-dependent ROC at landmark intervals (excluding patients censored prior to horizon)
     roc_results = {}
     for horizon in [12, 24, 36, 60]:
-        y_true = ((data["RFS_MONTHS"] <= horizon) & (data["RECURRENCE_EVENT"] == 1)).astype(int)
+        valid = ((data["RFS_MONTHS"] <= horizon) & (data["RECURRENCE_EVENT"] == 1)) | (data["RFS_MONTHS"] > horizon)
+        sub_d = data[valid].copy()
+        y_true = ((sub_d["RFS_MONTHS"] <= horizon) & (sub_d["RECURRENCE_EVENT"] == 1)).astype(int)
         
         # Risk score from Stage
-        auc_stage = roc_auc_score(y_true, data["STAGE_NUM"])
-        fpr_s, tpr_s, _ = roc_curve(y_true, data["STAGE_NUM"])
+        auc_stage = roc_auc_score(y_true, sub_d["STAGE_NUM"])
+        fpr_s, tpr_s, _ = roc_curve(y_true, sub_d["STAGE_NUM"])
 
         # Combined risk score
-        combined_score = 0.6 * data["STAGE_NUM"] + 0.4 * data["HTBI"]
+        combined_score = 0.6 * sub_d["STAGE_NUM"] + 0.4 * sub_d["HTBI"]
         auc_comb = roc_auc_score(y_true, combined_score)
         fpr_c, tpr_c, _ = roc_curve(y_true, combined_score)
 
