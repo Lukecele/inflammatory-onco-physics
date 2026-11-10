@@ -189,11 +189,11 @@ class InflammatoryOncoContinuum:
             # Record metrics
             if step % save_interval == 0 or step == nt - 1:
                 history_time.append(t)
-                history_N_S_mean.append(np.mean(N_S))
-                history_N_R_mean.append(np.mean(N_R))
-                history_N_tot_mean.append(np.mean(N_S + N_R))
-                history_Phi_mean.append(np.mean(Phi))
-                history_Imm_mean.append(np.mean(E_imm))
+                history_N_S_mean.append(np.average(N_S, weights=self.r))
+                history_N_R_mean.append(np.average(N_R, weights=self.r))
+                history_N_tot_mean.append(np.average(N_S + N_R, weights=self.r))
+                history_Phi_mean.append(np.average(Phi, weights=self.r))
+                history_Imm_mean.append(np.average(E_imm, weights=self.r))
 
             # Store snapshots
             for target_t in [0.0, 12.0, 36.0, 48.0]:

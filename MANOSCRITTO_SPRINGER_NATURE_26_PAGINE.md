@@ -34,7 +34,7 @@ In accordance with REMARK reporting recommendations, the framework was evaluated
 - **External Clinical Trial Anchor:** The landmark double-blind randomized CANTOS trial (*The Lancet* 2017, $N = 10,061$).
 
 ### Findings
-In the complete-case raw laboratory cohort ($N = 1,056$), pre-operative biophysical inflammatory tier stratified 5-year overall survival from 69.4% (Low HTBI) to 56.7% (High HTBI) ($\mathbf{p = 3.81 \times 10^{-7}}$), maintaining independent prognostic association in multivariable Cox proportional hazards regression adjusting for Pathologic TNM Stage and Histological Grade (**Hazard Ratio $HR = 1.43$, $95\%\text{ CI: } 1.14\text{--}1.81, p = 0.0022$**; continuous multivariable $HR = 2.20$, $p = 0.00041$). 
+In the complete-case raw laboratory cohort ($N = 1,056$), pre-operative biophysical inflammatory tier stratified 5-year overall survival from 69.4% (Low HTBI) to 56.7% (High HTBI) ($\mathbf{p = 3.81 \times 10^{-7}}$), maintaining independent prognostic association in multivariable Cox proportional hazards regression adjusting for Pathologic TNM Stage and Histological Grade (**Hazard Ratio $HR = 1.43$, $95\%\text{ CI: } 1.14\text{--}1.81, p = 0.002244$**; continuous multivariable $HR = 2.20$, $p = 0.00041$). 
 
 In the MSKCC lung adenocarcinoma discovery cohort ($N=604, 98\text{ recurrences}$), continuous decoupled HTBI conferred an **adjusted $HR = 2.49$ ($95\%\text{ CI: } 1.00\text{--}6.18, p = 0.050$)** (binary adjusted $HR = 1.89$, $p = 0.029$) after controlling for Pathologic TNM Stage ($HR = 2.53, p < 0.0005$), patient sex, and somatic *EGFR* mutations. Schoenfeld residuals confirmed proportional hazards ($\chi^2 = 3.82, p = 0.431$). 500-fold bootstrap cross-validation showed an incremental discrimination gain ($\Delta C\text{-index} = +0.050, p = 0.044$; 2-year $AUC = 0.794$). In competing risks analysis (Aalen-Johansen cumulative incidence function), HTBI specifically stratified cancer-related recurrence ($\mathbf{p = 0.029}$), while remaining unstratified for non-cancer competing mortality ($\mathbf{p = 0.680}$).
 
@@ -252,7 +252,7 @@ Patients stratified by inflammatory biophysical status exhibited divergent survi
 * **Log-Rank Test:** $\mathbf{\chi^2 = 25.8, p = 3.81 \times 10^{-7}}$ (Univariate binary $HR = 1.75$, $95\%\text{ CI: } 1.43\text{--}2.14, p = 4.11 \times 10^{-8}$).
 
 In multivariable Cox proportional hazards regression adjusting for anatomical stage and tumor grade:
-$$\mathbf{HR_{\text{Inflammatory-Biophysical (Binary)}}} = 1.434 \quad (95\%\text{ CI: } 1.138\text{--}1.807, \; \mathbf{p = 0.00224})$$
+$$\mathbf{HR_{\text{Inflammatory-Biophysical (Binary)}}} = 1.434 \quad (95\%\text{ CI: } 1.138\text{--}1.807, \; \mathbf{p = 0.0022444})$$
 $$\mathbf{HR_{\text{Inflammatory-Biophysical (Continuous)}}} = 2.202 \quad (95\%\text{ CI: } 1.434\text{--}3.382, \; \mathbf{p = 0.00041})$$
 Adjusting for:
 * Pathologic TNM Stage ($HR = 1.95, 95\%\text{ CI: } 1.62\text{--}2.35, p < 10^{-12}$);
@@ -396,7 +396,7 @@ To anchor this computational concept in clinical literature, we examined the lan
 | - Stage I / II | 694 (65.7%) | 442 (70.5%) | 252 (58.7%) | |
 | - Stage III / IV | 362 (34.3%) | 185 (29.5%) | 177 (41.3%) | |
 | **5-Year Overall Survival** | **64.3%** | **69.4%** | **56.7%** | **p = 3.81 × 10^-7** |
-| **Multivariable Cox HR (Adjusted)**| — | 1.000 (Reference) | **1.434 (1.138 - 1.807)** | **p = 0.00224** |
+| **Multivariable Cox HR (Adjusted)**| — | 1.000 (Reference) | **1.434 (1.138 - 1.807)** | **p = 0.0022444** |
 | **Continuous Cox HR (Adjusted)** | — | Continuous Per Unit | **2.202 (1.434 - 3.382)** | **p = 0.00041** |
 
 ---

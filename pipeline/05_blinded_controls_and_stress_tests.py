@@ -49,7 +49,7 @@ def run_blinded_and_placebo_experiments():
 
     cox_df = df[[
         "RFS_MONTHS", "RECURRENCE_EVENT",
-        "STAGE_NUM", "IS_MALE", "IS_SMOKER", "IS_EGFR_MUTANT", "HTBI_HIGH"
+        "STAGE_NUM", "IS_MALE", "IS_EGFR_MUTANT", "HTBI_HIGH"
     ]].dropna().copy()
     cox_df = cox_df[cox_df["RFS_MONTHS"] > 0].reset_index(drop=True)
 

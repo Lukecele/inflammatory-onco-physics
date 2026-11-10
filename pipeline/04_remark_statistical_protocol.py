@@ -51,7 +51,7 @@ def run_remark_protocol():
 
     # 2. REMARK Criterion: Proportional Hazards Assumption Check
     print("[*] Testing Proportional Hazards Assumption (Schoenfeld Residuals)...")
-    fit_df = data[["RFS_MONTHS", "RECURRENCE_EVENT", "STAGE_NUM", "IS_MALE", "IS_SMOKER", "IS_EGFR_MUTANT", "HTBI_HIGH"]]
+    fit_df = data[["RFS_MONTHS", "RECURRENCE_EVENT", "STAGE_NUM", "IS_MALE", "IS_EGFR_MUTANT", "HTBI_HIGH"]]
     cph = CoxPHFitter()
     cph.fit(fit_df, duration_col="RFS_MONTHS", event_col="RECURRENCE_EVENT")
     
@@ -64,19 +64,21 @@ def run_remark_protocol():
     thresholds = np.linspace(0.05, 0.50, 46)
     net_benefit_none = np.zeros_like(thresholds)
     
-    # Event rate at 24m
-    y_24m = ((data["RFS_MONTHS"] <= 24) & (data["RECURRENCE_EVENT"] == 1)).astype(int)
+    # Event rate at 24m (excluding patients censored prior to 24m)
+    valid_24 = ((data["RFS_MONTHS"] <= 24) & (data["RECURRENCE_EVENT"] == 1)) | (data["RFS_MONTHS"] > 24)
+    data_24 = data[valid_24].copy()
+    y_24m = ((data_24["RFS_MONTHS"] <= 24) & (data_24["RECURRENCE_EVENT"] == 1)).astype(int)
     prevalence = np.mean(y_24m)
     net_benefit_all = prevalence - (1 - prevalence) * (thresholds / (1 - thresholds))
 
     # DCA for Stage alone
-    pred_stage = (data["STAGE_NUM"] - 1.0) / 2.0
+    pred_stage = (data_24["STAGE_NUM"] - 1.0) / 2.0
     nb_stage = []
     nb_htbi = []
     
-    combined_score = 0.5 * pred_stage + 0.5 * data["HTBI"]
+    combined_score = 0.5 * pred_stage + 0.5 * data_24["HTBI"]
 
-    n_tot = len(data)
+    n_tot = len(data_24)
     for p_t in thresholds:
         # Stage model
         pred_pos_s = (pred_stage >= p_t).astype(int)

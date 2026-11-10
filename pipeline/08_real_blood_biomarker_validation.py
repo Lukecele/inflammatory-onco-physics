@@ -128,9 +128,11 @@ def run_real_blood_validation():
     print(f" • 3-Year Overall Survival: Low HTBI {surv_3yr_low:.1f}% vs High HTBI {surv_3yr_high:.1f}% (Delta = {surv_3yr_low - surv_3yr_high:.1f}%)")
     print(f" • 5-Year Overall Survival: Low HTBI {surv_5yr_low:.1f}% vs High HTBI {surv_5yr_high:.1f}% (Delta = {surv_5yr_low - surv_5yr_high:.1f}%)")
 
-    # 4. ROC Analysis for 3-Year Survival
-    y_3yr_death = ((clean_df["OS_MONTHS"] <= 36) & (clean_df["EVENT"] == 1)).astype(int)
-    fpr, tpr, _ = roc_curve(y_3yr_death, clean_df["HTBI_REAL"])
+    # 4. ROC Analysis for 3-Year Survival (excluding patients censored before 36m)
+    valid_36 = ((clean_df["OS_MONTHS"] <= 36) & (clean_df["EVENT"] == 1)) | (clean_df["OS_MONTHS"] > 36)
+    sub_36 = clean_df[valid_36].copy()
+    y_3yr_death = ((sub_36["OS_MONTHS"] <= 36) & (sub_36["EVENT"] == 1)).astype(int)
+    fpr, tpr, _ = roc_curve(y_3yr_death, sub_36["HTBI_REAL"])
     auc_real_blood = auc(fpr, tpr)
     print(f"[✔] 3-Year Survival Discrimination: AUC = {auc_real_blood:.3f}")
 
