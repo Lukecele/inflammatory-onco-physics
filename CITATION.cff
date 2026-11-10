@@ -6,7 +6,7 @@ authors:
     orcid: "https://orcid.org/0009-0007-0931-3555"
     affiliation: "Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Naples, Italy; Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy"
 title: "A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients"
-version: 1.0.0
+version: 1.1.0
 doi: "10.5281/zenodo.24118328"
 date-released: 2026-11-10
 url: "https://github.com/Lukecele/inflammatory-onco-physics"

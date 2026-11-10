@@ -7,7 +7,7 @@
   "creators": [
     {
       "name": "Celebrano, Luca",
-      "affiliation": "Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Naples, Italy; Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy",
+      "affiliation": "Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Universit\u00e0 degli Studi di Napoli Federico II, Naples, Italy; Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy",
       "orcid": "0009-0007-0931-3555"
     }
   ],
@@ -30,5 +30,6 @@
     {
       "identifier": "zenodo"
     }
-  ]
+  ],
+  "version": "1.1.0"
 }
