@@ -1,6 +1,6 @@
 # A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14050212.svg)](https://doi.org/10.5281/zenodo.14050212)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24118328.svg)](https://doi.org/10.5281/zenodo.24118328)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
@@ -16,7 +16,7 @@
 
 This repository provides the complete, open-access computational framework, biophysical continuous reaction-diffusion solvers, biostatistical survival pipelines, and clinical cohort matrices supporting the monograph:
 
-> **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients.* Springer Nature Submission / Zenodo Archive. [DOI: 10.5281/zenodo.14050212](https://doi.org/10.5281/zenodo.14050212).
+> **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients.* Springer Nature Submission / Zenodo Archive. [DOI: 10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328).
 
 ### The Biological Problem
 Adjuvant targeted therapies (e.g., third-generation EGFR-TKIs like osimertinib in the ADAURA trial) demonstrate profound disease-free survival (DFS) benefits during active administration, yet post-cessation survival trajectories exhibit a characteristic rebound recurrence within 12–18 months. 

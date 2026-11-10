@@ -8,7 +8,7 @@ $^{2}$Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy
 **Corresponding Author:** Luca Celebrano, MD Candidate (`l.celebrano@studenti.unina.it`), ORCID: `0009-0007-0931-3555`  
 **Target Category:** Original Article / Translational Oncology Monograph (REMARK-Compliant)  
 **Open Code & Data Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
-**Persistent Archive:** DOI: [10.5281/zenodo.14050212](https://doi.org/10.5281/zenodo.14050212)  
+**Persistent Archive:** DOI: [10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328)  
 
 ---
 
@@ -441,7 +441,7 @@ Generative artificial intelligence and agentic coding workflows (Antigravity AI)
 ### Data and Code Availability
 All analysis scripts, mathematical solvers, pipeline modules, and exploratory calculators are publicly available at the verified GitHub repository:  
 `https://github.com/Lukecele/inflammatory-onco-physics`  
-Permanent archival DOI: [10.5281/zenodo.14050212](https://doi.org/10.5281/zenodo.14050212)
+Permanent archival DOI: [10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328)
 
 Public data sources analyzed:
 - MSKCC Lung Adenocarcinoma cohort: cBioPortal (`luad_mskcc_2020`);
