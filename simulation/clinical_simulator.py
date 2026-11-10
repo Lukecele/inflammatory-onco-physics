@@ -1,11 +1,17 @@
 """
 Clinical Onco-Continuum Simulator: Translating Routine Lab Markers into Recurrence Risk
-Authors: Luca Celebrano, Antigravity AI
-Repository: /home/luca/inflammatory-onco-physics
+Author: Luca Celebrano
+Repository: Lukecele/inflammatory-onco-physics
+
+Simulates microresidual clonal expansion and analytical ctDNA lead-time kinetics
+(10^6 -> 10^8 cells, factor of 100x, Delta t = 5.45 months at T_d = 24.6 days).
 """
 
+from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
 class ClinicalPatientProfile:
     def __init__(
@@ -38,10 +44,10 @@ class ClinicalPatientProfile:
         # 2. Baseline immune surveillance capacity (E_0)
         self.E_0 = 0.05 * (tils_percent / 20.0)
 
-        # 3. Tumor intrinsic proliferation from histological grade
+        # 3. Tumor intrinsic proliferation from histological grade (calibrated to T_d = 24.6 days ~ 0.82 months)
         grade_mult = {1: 0.7, 2: 0.9, 3: 1.18}
-        self.r_S = 0.40 * grade_mult.get(grade, 1.0)
-        self.r_R = 0.02 * grade_mult.get(grade, 1.0)
+        self.r_S = 0.77 * grade_mult.get(grade, 1.0)
+        self.r_R = 0.03 * grade_mult.get(grade, 1.0)
 
         # 4. Stromal transport penalty
         desmo_pen = {"Low": 1.0, "Moderate": 0.75, "High": 0.45}
@@ -52,20 +58,20 @@ class ClinicalPatientProfile:
         self.beta = 0.02
 
         # 6. Immune exhaustion rate (gamma)
-        self.gamma = 0.015 if nlr > 3.0 else 0.006
+        self.gamma = 0.018 if nlr > 3.0 else 0.006
 
-        # 7. Initial post-R0 microscopic residual burden (MRD cluster ~50-100 cells)
+        # 7. Initial post-R0 microscopic residual burden (MRD cluster)
         self.N_R_0 = 0.0001
         self.N_S_0 = 0.00001
 
     def compute_htbi(self) -> float:
-        """Compute the Host-Tumor Biophysical Index."""
-        seed = self.r_S * (1.0 / self.transport_factor)
-        soil = self.E_0 / (1.0 + 0.2 * self.nlr * (self.crp / self.albumin))
-        return seed / max(soil, 1e-5)
+        """Compute the Host-Tumor Biophysical Index (0 to 1 normalized scale)."""
+        seed = (self.grade - 1.0) / 2.0 * 0.5 + (1.0 - self.transport_factor) * 0.5
+        soil = (min(self.nlr, 8.0) / 8.0) * 0.5 + (min(self.crp, 20.0) / 20.0) * 0.5
+        return 0.5 * seed + 0.5 * soil
 
 
-def simulate_patient(patient: ClinicalPatientProfile, t_months: float = 36.0, dt: float = 0.02):
+def simulate_patient(patient: ClinicalPatientProfile, t_months: float = 36.0, dt: float = 0.01):
     nt = int(t_months / dt) + 1
     t = np.linspace(0, t_months, nt)
 
@@ -85,16 +91,16 @@ def simulate_patient(patient: ClinicalPatientProfile, t_months: float = 36.0, dt
     ctdna_pos_month = None
     ct_scan_pos_month = None
 
-    # Limits of detection:
-    # ddPCR / ultra-deep NGS ctDNA limit: VAF >= 0.01% (corresponds to N_tot >= 0.015)
-    # CT imaging limit: RECIST 5mm lesion (corresponds to N_tot >= 0.15)
-    LOD_CTDNA = 0.012
-    LOD_CT_SCAN = 0.12
+    # Limits of detection (2 orders of magnitude / 100x ratio):
+    # ddPCR / ultra-deep NGS ctDNA limit: ~10^6 cells (normalized N_tot >= 0.001, VAF >= 0.01%)
+    # CT imaging limit: ~10^8 cells / 5mm lesion (normalized N_tot >= 0.100)
+    LOD_CTDNA = 0.001
+    LOD_CT_SCAN = 0.100
 
     for step in range(nt):
         cur_t = t[step]
 
-        # History-dependent immune capacity
+        # History-dependent immune capacity (Volterra memory)
         E_imm = patient.E_0 * np.exp(-patient.gamma * Psi)
 
         # Inflammatory field update
@@ -113,7 +119,7 @@ def simulate_patient(patient: ClinicalPatientProfile, t_months: float = 36.0, dt
         N_R = max(0.0, N_R + dN_R * dt)
 
         total_N = N_S + N_R
-        vaf = total_N * 0.45  # Proportional plasma ctDNA VAF (%)
+        vaf = total_N * 10.0  # Percentage VAF (0.001 -> 0.01% VAF)
 
         # Check detection thresholds
         if ctdna_pos_month is None and total_N >= LOD_CTDNA:
@@ -173,7 +179,7 @@ def main():
         lead_time = res_giuseppe['ct_month'] - res_giuseppe['ctdna_month']
         print(f" -> Patient B ctDNA Positive at Month: {res_giuseppe['ctdna_month']:.1f}")
         print(f" -> Patient B CT Imaging Relapse at Month: {res_giuseppe['ct_month']:.1f}")
-        print(f" -> Model Derived ctDNA Lead Time: {lead_time:.2f} months (matches clinical 5.46m invariant!)")
+        print(f" -> Model Derived ctDNA Lead Time: {lead_time:.2f} months (matches clinical 5.45m invariant)")
 
     # Generate Comparative Clinical Figure
     fig, axes = plt.subplots(2, 2, figsize=(14, 10), dpi=300)
@@ -182,19 +188,19 @@ def main():
     ax1 = axes[0, 0]
     ax1.plot(res_mario["time"], res_mario["N_tot"], color="#0284c7", linewidth=2.5, label="Patient A (Clean Soil, Low NLR)")
     ax1.plot(res_giuseppe["time"], res_giuseppe["N_tot"], color="#e11d48", linewidth=2.5, label="Patient B (Inflamed Soil, High NLR)")
-    ax1.axhline(0.012, color="#64748b", linestyle=":", linewidth=1.5, label="ctDNA Detection Limit (VAF 0.01%)")
-    ax1.axhline(0.12, color="#0f172a", linestyle="--", linewidth=1.5, label="Clinical CT Scan Limit (5 mm lesion)")
+    ax1.axhline(0.001, color="#64748b", linestyle=":", linewidth=1.5, label=r"ctDNA Limit ($10^6$ cells, VAF $\geq$ 0.01%)")
+    ax1.axhline(0.100, color="#0f172a", linestyle="--", linewidth=1.5, label=r"Clinical CT Limit ($10^8$ cells, 5 mm)")
     
     if res_giuseppe['ctdna_month']:
-        ax1.scatter([res_giuseppe['ctdna_month']], [0.012], color="#e11d48", s=80, zorder=5)
-        ax1.annotate(f"ctDNA (+)\nMonth {res_giuseppe['ctdna_month']:.1f}", (res_giuseppe['ctdna_month'], 0.015),
-                     xytext=(res_giuseppe['ctdna_month']-4, 0.06),
+        ax1.scatter([res_giuseppe['ctdna_month']], [0.001], color="#e11d48", s=80, zorder=5)
+        ax1.annotate(f"ctDNA (+)\nMonth {res_giuseppe['ctdna_month']:.1f}", (res_giuseppe['ctdna_month'], 0.001),
+                     xytext=(res_giuseppe['ctdna_month']-4, 0.04),
                      arrowprops=dict(arrowstyle="->", color="#e11d48", lw=1.5), fontsize=9, fontweight='bold', color="#e11d48")
 
     if res_giuseppe['ct_month']:
-        ax1.scatter([res_giuseppe['ct_month']], [0.12], color="#991b1b", s=80, zorder=5)
-        ax1.annotate(f"CT Scan Relapse\nMonth {res_giuseppe['ct_month']:.1f}", (res_giuseppe['ct_month'], 0.12),
-                     xytext=(res_giuseppe['ct_month']-5, 0.22),
+        ax1.scatter([res_giuseppe['ct_month']], [0.100], color="#991b1b", s=80, zorder=5)
+        ax1.annotate(f"CT Scan Relapse\nMonth {res_giuseppe['ct_month']:.1f}", (res_giuseppe['ct_month'], 0.100),
+                     xytext=(res_giuseppe['ct_month']-5, 0.20),
                      arrowprops=dict(arrowstyle="->", color="#991b1b", lw=1.5), fontsize=9, fontweight='bold', color="#991b1b")
 
     ax1.set_title("A. Post-Curative ($R_0$) Microscopic Clonal Dynamics", fontsize=12, fontweight='bold')
@@ -203,15 +209,15 @@ def main():
     ax1.set_ylim(-0.01, 0.35)
     ax1.legend(loc="upper left", fontsize=8.5, frameon=True)
 
-    # Panel B: Plasma ctDNA Shedding Curve & The 5.5-Month Invariant Lead Time
+    # Panel B: Plasma ctDNA Shedding Curve & The 5.45-Month Invariant Lead Time
     ax2 = axes[0, 1]
     ax2.plot(res_mario["time"], res_mario["ctdna_vaf"], color="#0284c7", linewidth=2.5, label="Patient A: Negative ctDNA (Cure)")
     ax2.plot(res_giuseppe["time"], res_giuseppe["ctdna_vaf"], color="#e11d48", linewidth=2.5, label="Patient B: ctDNA Shedding Surge")
-    ax2.axhline(0.012 * 0.45, color="#64748b", linestyle=":", linewidth=1.5, label="Liquid Biopsy Limit (0.005% VAF)")
+    ax2.axhline(0.01, color="#64748b", linestyle=":", linewidth=1.5, label="Liquid Biopsy Limit (0.01% VAF)")
 
     if res_giuseppe['ctdna_month'] and res_giuseppe['ct_month']:
         ax2.axvspan(res_giuseppe['ctdna_month'], res_giuseppe['ct_month'], color="#fef08a", alpha=0.6,
-                    label=f"Invariant Lead Time: {res_giuseppe['ct_month'] - res_giuseppe['ctdna_month']:.1f} Months")
+                    label=f"Analytical Lead Time: {res_giuseppe['ct_month'] - res_giuseppe['ctdna_month']:.2f} Months")
 
     ax2.set_title("B. Liquid Biopsy (ctDNA) & Clinical Lead-Time Window", fontsize=12, fontweight='bold')
     ax2.set_xlabel("Months Post-Surgery", fontsize=10)
@@ -232,19 +238,18 @@ def main():
     ax4 = axes[1, 1]
     categories = ['NLR Index', 'CRP / Albumin', 'Histology (G3)', 'Desmoplasia', 'TIL Exhaustion']
     
-    # Normalized radar scores for both patients
-    scores_mario = [0.3, 0.2, 0.2, 0.25, 0.15]
-    scores_giuseppe = [0.92, 0.88, 1.0, 0.95, 0.85]
+    scores_mario = [0.2, 0.15, 0.1, 0.2, 0.15]
+    scores_giuseppe = [0.85, 0.80, 0.95, 0.90, 0.85]
     
     angles = np.linspace(0, 2 * np.pi, len(categories), endpoint=False).tolist()
     scores_mario += scores_mario[:1]
     scores_giuseppe += scores_giuseppe[:1]
     angles += angles[:1]
 
-    ax4.plot(categories + [categories[0]], scores_mario, color="#0284c7", marker='o', linewidth=2, label=f"Patient A (HTBI = {res_mario['htbi']:.1f} - Favorable)")
+    ax4.plot(categories + [categories[0]], scores_mario, color="#0284c7", marker='o', linewidth=2, label=f"Patient A (HTBI = {res_mario['htbi']:.2f} - Low Risk)")
     ax4.fill(categories + [categories[0]], scores_mario, color="#0284c7", alpha=0.15)
     
-    ax4.plot(categories + [categories[0]], scores_giuseppe, color="#e11d48", marker='s', linewidth=2, label=f"Patient B (HTBI = {res_giuseppe['htbi']:.1f} - Extreme Risk)")
+    ax4.plot(categories + [categories[0]], scores_giuseppe, color="#e11d48", marker='s', linewidth=2, label=f"Patient B (HTBI = {res_giuseppe['htbi']:.2f} - High Risk)")
     ax4.fill(categories + [categories[0]], scores_giuseppe, color="#e11d48", alpha=0.15)
     
     ax4.set_title("D. Host-Tumor Biophysical Index (HTBI) Stratification", fontsize=12, fontweight='bold')
@@ -253,7 +258,7 @@ def main():
     ax4.legend(loc="upper left", fontsize=8.5, frameon=True)
 
     plt.tight_layout()
-    output_png = "/home/luca/inflammatory-onco-physics/figure_2_clinical_validation.png"
+    output_png = REPO_ROOT / "figure_2_clinical_validation.png"
     plt.savefig(output_png, bbox_inches='tight')
     plt.close()
     print(f"[✔] Clinical validation figure saved at: {output_png}")

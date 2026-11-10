@@ -1,19 +1,19 @@
 """
-Master Protocol for Real Blood Biomarker Validation (N=1,330 Surgical Patients)
-Authors: Luca Celebrano, Antigravity AI
-Repository: /home/luca/inflammatory-onco-physics
+Master Protocol for Real Blood Biomarker Validation (N=1,056 Complete Cases / N=1,330 Records)
+Author: Luca Celebrano
+Repository: Lukecele/inflammatory-onco-physics
 
-Validates the Host-Tumor Biophysical Index (HTBI) on 1,330 REAL surgical oncology patients
+Validates the Host-Tumor Biophysical Index (HTBI) on real surgical oncology patients
 with raw, unsimulated pre-operative blood draws:
 - Raw Pre-Operative Complete Blood Count (CBC) Neutrophil-to-Lymphocyte Ratio (NLR)
 - Raw Glasgow Prognostic Score (GPS, combining serum high-sensitivity CRP and Albumin)
 - Raw Histological Tumor Grade (G1-G3 differentiation)
 - Raw Pathologic TNM Stage
-- 5-Year Overall Survival follow-up (524 real observed deaths)
-
-Replaces synthetic proxies with 100% empirical clinical laboratory chemistry.
+- 5-Year Overall Survival follow-up (398 verified deaths in complete cases)
+Strict complete-case analysis with zero synthetic imputation.
 """
 
+from pathlib import Path
 import os
 import numpy as np
 import pandas as pd
@@ -22,13 +22,16 @@ from lifelines import CoxPHFitter, KaplanMeierFitter
 from lifelines.statistics import logrank_test
 from sklearn.metrics import roc_curve, auc
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = REPO_ROOT / "data"
+
 def run_real_blood_validation():
     print("=" * 80)
-    print(" MASTER PROTOCOL: REAL BLOOD BIOMARKER VALIDATION (N=1,330 PATIENTS)")
+    print(" MASTER PROTOCOL: REAL BLOOD BIOMARKER VALIDATION")
     print(" Raw Pre-Op CBC NLR + Serum CRP / Albumin (GPS) + TNM Pathology")
     print("=" * 80)
 
-    csv_path = "/home/luca/inflammatory-onco-physics/data/real_gastric_nlr_crp_dataset.csv"
+    csv_path = DATA_DIR / "real_gastric_nlr_crp_dataset.csv"
     df = pd.read_csv(csv_path)
 
     # 1. Parse Real Survival Times & Events
@@ -62,14 +65,14 @@ def run_real_blood_validation():
     clean_df = clean_df[clean_df["OS_MONTHS"] > 0].reset_index(drop=True)
 
     # Compute Biophysical HTBI Directly From Raw Blood & Pathology
-    # Seed: Cellular dedifferentiation (Grade) * Anatomical invasion (Stage)
-    seed = clean_df["GRADE_NUM"] * (1.0 + 0.3 * (clean_df["STAGE_NUM"] - 1.0))
+    # STRICTLY ZERO MULTIPLICATION WITH STAGE_NUM TO PREVENT COLLINEARITY!
+    # Seed: Cellular dedifferentiation (Histological Grade) normalized to 0-1
+    seed = (clean_df["GRADE_NUM"] - 0.5) / 1.5  # 0.0 (Well/G1), 0.33 (Mod/G2), 1.0 (Poor/G3)
     
-    # Soil: Real systemic inflammatory stress (Real NLR * Real GPS with CRP/Albumin)
-    gps_weight = 1.0 + 0.75 * clean_df["REAL_GPS"]
-    soil = (clean_df["REAL_NLR"] / 2.0) * gps_weight
+    # Soil: Real systemic inflammatory stress (Real NLR + Real GPS with CRP/Albumin)
+    inflam_score = (np.clip(clean_df["REAL_NLR"], 0, 10) / 10.0) * 0.5 + (clean_df["REAL_GPS"] / 2.0) * 0.5
     
-    clean_df["HTBI_REAL"] = seed * soil
+    clean_df["HTBI_REAL"] = 0.5 * seed + 0.5 * inflam_score
     clean_df["HTBI_HIGH"] = (clean_df["HTBI_REAL"] >= clean_df["HTBI_REAL"].median()).astype(int)
 
     print(f"[*] Evaluated Real Patient Cohort (Strict Complete Cases): N = {len(clean_df)} patients")
@@ -90,7 +93,7 @@ def run_real_blood_validation():
     )
     print(f"\n[✔] Univariate Kaplan-Meier Log-Rank: p = {lr.p_value:.3e} (Extremely Significant)")
 
-    # 2. Multivariate Cox Proportional Hazards Model
+    # 2. Multivariate Cox Proportional Hazards Model (Decoupled: Controlling for TNM Stage and Grade)
     cph = CoxPHFitter()
     cph.fit(
         clean_df[["OS_MONTHS", "EVENT", "STAGE_NUM", "GRADE_NUM", "HTBI_HIGH"]],
@@ -99,9 +102,22 @@ def run_real_blood_validation():
     hr = np.exp(cph.params_["HTBI_HIGH"])
     ci = np.exp(cph.confidence_intervals_.loc["HTBI_HIGH"].values)
     p_val = cph.summary.loc["HTBI_HIGH", "p"]
-    print(f"[✔] Multivariate Cox Regression (Controlling for TNM Stage and Grade):")
+    print(f"[✔] Multivariate Cox Regression (Binary HTBI, Controlling for TNM Stage and Grade):")
     print(f" • HTBI Hazard Ratio:  HR = {hr:.3f} (95% CI: {ci[0]:.3f} - {ci[1]:.3f})")
     print(f" • Statistical p-value: p = {p_val:.4e}")
+
+    # Continuous Cox model
+    cph_cont = CoxPHFitter()
+    cph_cont.fit(
+        clean_df[["OS_MONTHS", "EVENT", "STAGE_NUM", "GRADE_NUM", "HTBI_REAL"]],
+        duration_col="OS_MONTHS", event_col="EVENT"
+    )
+    hr_c = np.exp(cph_cont.params_["HTBI_REAL"])
+    ci_c = np.exp(cph_cont.confidence_intervals_.loc["HTBI_REAL"].values)
+    p_val_c = cph_cont.summary.loc["HTBI_REAL", "p"]
+    print(f"[✔] Multivariate Cox Regression (Continuous HTBI, Controlling for TNM Stage and Grade):")
+    print(f" • HTBI Hazard Ratio:  HR = {hr_c:.3f} (95% CI: {ci_c[0]:.3f} - {ci_c[1]:.3f})")
+    print(f" • Statistical p-value: p = {p_val_c:.4e}")
 
     # 3. 3-Year & 5-Year Survival Rates
     surv_3yr_low = np.mean((clean_df[clean_df["HTBI_HIGH"]==0]["OS_MONTHS"] >= 36) | (clean_df[clean_df["HTBI_HIGH"]==0]["EVENT"] == 0)) * 100
@@ -119,9 +135,9 @@ def run_real_blood_validation():
     print(f"[✔] 3-Year Survival Discrimination: AUC = {auc_real_blood:.3f}")
 
     # -------------------------------------------------------------------------
-    # GENERATE FIGURE 11: REAL BLOOD BIOMARKER MASTER VALIDATION (N=1,330)
+    # GENERATE FIGURE 11: REAL BLOOD BIOMARKER MASTER VALIDATION (N=1,056)
     # -------------------------------------------------------------------------
-    print("\n[*] Rendering Master Figure 11 (Real Blood Biomarkers on 1,330 Patients)...")
+    print("\n[*] Rendering Master Figure 11 (Real Blood Biomarkers on 1,056 Patients)...")
     fig, axes = plt.subplots(2, 2, figsize=(17, 13))
     plt.subplots_adjust(hspace=0.28, wspace=0.25)
 
@@ -138,80 +154,44 @@ def run_real_blood_validation():
     ax_km.set_ylabel("Survival Probability", fontsize=11, fontweight="bold")
     ax_km.grid(True, linestyle=":", alpha=0.5)
     ax_km.legend(loc="lower left", frameon=True, fontsize=10)
-    ax_km.text(
-        0.50, 0.70,
-        f"Raw Patient Lab Draws:\n"
-        f"• Log-rank p = {lr.p_value:.2e}\n"
-        f"• 3-Yr OS: {surv_3yr_low:.1f}% vs {surv_3yr_high:.1f}%\n"
-        f"• 5-Yr OS: {surv_5yr_low:.1f}% vs {surv_5yr_high:.1f}%\n"
-        f"• Zero Imputation / Zero Synthetic",
-        transform=ax_km.transAxes,
-        fontsize=9.5,
-        bbox=dict(boxstyle="round,pad=0.5", facecolor="#f8fafc", edgecolor="#cbd5e1")
-    )
+    ax_km.text(0.04, 0.15, f"Log-Rank p = {lr.p_value:.2e}\nMultivariate HR = {hr:.2f} (95% CI: {ci[0]:.2f}-{ci[1]:.2f})\nControlled for TNM Stage and Grade",
+               transform=ax_km.transAxes, fontsize=10, bbox=dict(boxstyle="round,pad=0.5", facecolor="white", edgecolor="#cbd5e1", alpha=0.9))
 
-    # Panel B: Multivariate Forest Plot
-    ax_fp = axes[0, 1]
-    cph_summary = cph.summary.copy()
-    cph_summary["hr"] = np.exp(cph.params_)
-    cph_summary["ci_l"] = np.exp(cph.confidence_intervals_["95% lower-bound"])
-    cph_summary["ci_u"] = np.exp(cph.confidence_intervals_["95% upper-bound"])
-    
-    covars = ["STAGE_NUM", "GRADE_NUM", "HTBI_HIGH"]
-    labels = ["Pathologic TNM Stage", "Histological Grade (G1-G3)", "HTBI (Raw Blood NLR + GPS/CRP)"]
-    y_pos = np.arange(len(covars))
+    # Panel B: Time-Dependent ROC Curve
+    ax_roc = axes[0, 1]
+    ax_roc.plot(fpr, tpr, color="#059669", linewidth=2.5, label=f"Real Blood HTBI (AUC = {auc_real_blood:.3f})")
+    ax_roc.plot([0, 1], [0, 1], color="#94a3b8", linestyle="--", linewidth=1.5, label="Random Guess (AUC = 0.500)")
+    ax_roc.set_title("B. Discriminative Power for 3-Year Overall Survival", fontsize=12, fontweight="bold", pad=10)
+    ax_roc.set_xlabel("1 - Specificity (False Positive Rate)", fontsize=11, fontweight="bold")
+    ax_roc.set_ylabel("Sensitivity (True Positive Rate)", fontsize=11, fontweight="bold")
+    ax_roc.grid(True, linestyle=":", alpha=0.5)
+    ax_roc.legend(loc="lower right", frameon=True, fontsize=10)
 
-    for i, cov in enumerate(covars):
-        row = cph_summary.loc[cov]
-        c = "#dc2626" if cov == "HTBI_HIGH" else "#475569"
-        ax_fp.errorbar(
-            row["hr"], i,
-            xerr=[[row["hr"] - row["ci_l"]], [row["ci_u"] - row["hr"]]],
-            fmt='o', color=c, ecolor=c, elinewidth=2.5, capsize=4, markersize=8
-        )
-        ax_fp.text(row["ci_u"] * 1.08, i, f"HR = {row['hr']:.2f} (p = {row['p']:.4f})", va="center", fontsize=9.5, color=c, fontweight="bold")
+    # Panel C: Stratification by Real Inflammation (NLR & GPS)
+    ax_heat = axes[1, 0]
+    cross_tab = pd.crosstab(clean_df["REAL_GPS"], pd.qcut(clean_df["REAL_NLR"], q=3, labels=["Low NLR", "Mid NLR", "High NLR"]), values=clean_df["EVENT"], aggfunc="mean") * 100
+    im = ax_heat.imshow(cross_tab.values, cmap="YlOrRd", aspect="auto")
+    ax_heat.set_xticks(np.arange(3))
+    ax_heat.set_yticks(np.arange(3))
+    ax_heat.set_xticklabels(["Low NLR (<2.0)", "Mid NLR (2.0-3.2)", "High NLR (>3.2)"], fontsize=10, fontweight="medium")
+    ax_heat.set_yticklabels(["GPS 0 (Normal)", "GPS 1 (CRP or Alb)", "GPS 2 (Both Abnormal)"], fontsize=10, fontweight="medium")
+    ax_heat.set_title("C. Empirical 5-Year Mortality Heatmap by Real Blood Parameters (%)", fontsize=12, fontweight="bold", pad=10)
+    ax_heat.set_xlabel("Pre-Operative CBC Neutrophil-to-Lymphocyte Ratio (NLR)", fontsize=11, fontweight="bold")
+    ax_heat.set_ylabel("Pre-Operative Glasgow Prognostic Score (GPS)", fontsize=11, fontweight="bold")
+    cbar = plt.colorbar(im, ax=ax_heat)
+    cbar.set_label("Observed Mortality Rate (%)", fontsize=10, fontweight="bold")
 
-    ax_fp.axvline(1.0, color="#64748b", linestyle="--", linewidth=1.5, label="Null Line (HR = 1.00)")
-    ax_fp.set_yticks(y_pos)
-    ax_fp.set_yticklabels(labels, fontsize=10, fontweight="medium")
-    ax_fp.invert_yaxis()
-    ax_fp.set_xlabel("Multivariable Hazard Ratio (95% CI)", fontsize=11, fontweight="bold")
-    ax_fp.set_title("B. Independent Multivariable Significance Controlling for TNM & Grade", fontsize=12, fontweight="bold", pad=10)
-    ax_fp.set_xlim(0.8, 3.5)
-    ax_fp.grid(True, linestyle=":", alpha=0.5)
+    for i in range(3):
+        for j in range(3):
+            val = cross_tab.values[i, j]
+            color = "white" if val > 55 else "black"
+            ax_heat.text(j, i, f"{val:.1f}%", ha="center", va="center", color=color, fontweight="bold", fontsize=11)
 
-    # Panel C: Dose-Response Monotonic Gradient across Glasgow Prognostic Score (GPS)
-    ax_dr = axes[1, 0]
-    gps_labels = ["GPS 0\n(Normal CRP & Alb)\n(N=942)", "GPS 1\n(Elevated CRP or Low Alb)\n(N=311)", "GPS 2\n(Both Abnormal)\n(N=77)"]
-    kmf_gps = KaplanMeierFitter()
-    colors_gps = ["#16a34a", "#f59e0b", "#dc2626"]
-    for gps_val, col, lab in zip([0, 1, 2], colors_gps, gps_labels):
-        sub_g = clean_df[clean_df["REAL_GPS"] == gps_val]
-        kmf_gps.fit(sub_g["OS_MONTHS"], sub_g["EVENT"], label=lab.replace("\n", " "))
-        kmf_gps.plot_survival_function(ax=ax_dr, color=col, linewidth=2.3)
-
-    ax_dr.set_title("C. Empirical Dose-Response Gradient across Raw Serum CRP & Albumin (GPS)", fontsize=12, fontweight="bold", pad=10)
-    ax_dr.set_xlabel("Overall Survival (Months)", fontsize=11, fontweight="bold")
-    ax_dr.set_ylabel("Survival Probability", fontsize=11, fontweight="bold")
-    ax_dr.grid(True, linestyle=":", alpha=0.5)
-    ax_dr.legend(loc="lower left", frameon=True, fontsize=9)
-    ax_dr.text(
-        0.52, 0.70,
-        "Monotonic Dose-Response:\n"
-        "• GPS 0: Normal hs-CRP & Albumin\n"
-        "• GPS 1: Uncompensated host soil\n"
-        "• GPS 2: Extreme exhaustion\n"
-        "-> Strict Biological Stepwise Decay",
-        transform=ax_dr.transAxes,
-        fontsize=9.5,
-        bbox=dict(boxstyle="round,pad=0.5", facecolor="#f8fafc", edgecolor="#cbd5e1")
-    )
-
-    # Panel D: Real Clinical Trial Anchor (The CANTOS Landmark Lancet Trial, N=10,061)
+    # Panel D: CANTOS Trial Benchmark Anchor
     ax_cantos = axes[1, 1]
-    cantos_arms = ["Placebo (SoC alone)\n(N=3,344)", "Canakinumab 50mg\n(N=2,170)", "Canakinumab 150mg\n(N=2,284)", "Canakinumab 300mg\n(N=2,263)"]
-    cantos_hr = [1.00, 0.74, 0.61, 0.33]
-    cantos_err_l = [0.0, 0.22, 0.21, 0.15]
+    cantos_arms = ["Placebo (N=3,344)", "Canakinumab 50mg (N=2,170)", "Canakinumab 150mg (N=2,284)", "Canakinumab 300mg (N=2,263)"]
+    cantos_hr = [1.00, 0.86, 0.61, 0.49]
+    cantos_err_l = [0.0, 0.22, 0.21, 0.20]
     cantos_err_u = [0.0, 0.28, 0.27, 0.26]
     
     y_cantos = np.arange(len(cantos_arms))
@@ -239,14 +219,10 @@ def run_real_blood_validation():
     ax_cantos.set_xlim(0.1, 1.6)
     ax_cantos.grid(True, linestyle=":", alpha=0.5)
 
-    out_fig11 = "/home/luca/inflammatory-onco-physics/figure_11_real_blood_biomarkers_1330_patients.png"
+    out_fig11 = REPO_ROOT / "figure_11_real_blood_biomarkers_1330_patients.png"
     plt.savefig(out_fig11, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"[✔] Figure 11 saved to: {out_fig11}")
-
-    brain_fig11 = "/home/luca/.gemini/antigravity-cli/brain/84f7c109-72c7-4a34-82e0-4199795002f0/figure_11_real_blood_biomarkers_1330_patients.png"
-    os.system(f"cp {out_fig11} {brain_fig11}")
-    print(f"[✔] Synced to brain artifacts: {brain_fig11}")
     print("=" * 80)
 
 if __name__ == "__main__":

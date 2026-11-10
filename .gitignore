@@ -1,3 +1,5 @@
 __pycache__/
 *.pyc
 *.pyo
+repo_dump.txt
+.DS_Store

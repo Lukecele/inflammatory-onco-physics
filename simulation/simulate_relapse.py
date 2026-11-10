@@ -1,18 +1,27 @@
 """
 Comparative Simulation: Low vs High Chronic Inflammatory Stress in Target Therapy Recurrence
-Authors: Luca Celebrano, Antigravity AI
-Repository: /home/luca/inflammatory-onco-physics
+Author: Luca Celebrano
+Repository: Lukecele/inflammatory-onco-physics
+
+Solves cylindrical modified Bessel K0 reaction-diffusion transport and
+generates Figure 1: Bifurcation dynamics, persister reservoir, and sanctuary sleeve.
 """
 
-import os
+from pathlib import Path
+import sys
 import numpy as np
 import matplotlib.pyplot as plt
+
+# Ensure local imports work cleanly
+REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT / "simulation"))
+
 from model import ModelParameters, InflammatoryOncoContinuum
 
 def run_comparative_study():
-    print("[*] Initializing Biophysical Onco-Continuum Simulation...")
+    print("[*] Initializing Biophysical Cylindrical Onco-Continuum Simulation...")
     
-    # Cohort A: Low Inflammatory Stress (Clean Homeostasis, NLR < 2, Low CRP)
+    # Cohort A: Low Inflammatory Stress (Clean Homeostasis, Low Systemic Cytokines)
     params_low = ModelParameters(
         sigma_base=0.04,   # Low baseline systemic stress
         alpha=0.03,        # Low persister transition
@@ -22,7 +31,7 @@ def run_comparative_study():
     print(" -> Simulating Cohort A (Low Systemic Inflammation)...")
     res_low = sim_low.simulate(t_span_months=60.0, t_therapy_stop=36.0)
 
-    # Cohort B: High Inflammatory Stress (Chronic Inflammation, NLR > 4, Elevated CRP)
+    # Cohort B: High Inflammatory Stress (Chronic Inflammation, Elevated Cytokines)
     params_high = ModelParameters(
         sigma_base=0.22,   # Elevated chronic systemic stress
         alpha=0.06,        # High persister induction
@@ -88,31 +97,35 @@ def run_comparative_study():
     ax3.legend(loc='lower left', frameon=True, fontsize=9)
 
     # -------------------------------------------------------------
-    # Panel 4: Spatial Microenvironmental Profile at Cessation (t=36m)
+    # Panel 4: Cylindrical Spatial Sanctuary Profile at Cessation (t=36m)
     # -------------------------------------------------------------
     ax4 = axes[1, 1]
     snap_low = res_low["snapshots"].get("month_36")
     snap_high = res_high["snapshots"].get("month_36")
 
     if snap_low and snap_high:
-        x = snap_low["x"]
-        ax4.plot(x, snap_low["N_R"], color='#0284c7', linewidth=2.2, label='Persisters (Low Inf)')
-        ax4.plot(x, snap_high["N_R"], color='#e11d48', linewidth=2.2, label='Persisters (High Inf)')
+        r = snap_low["r"]
+        ax4.plot(r, snap_low["N_R"], color='#0284c7', linewidth=2.2, label='Persisters (Low Inf)')
+        ax4.plot(r, snap_high["N_R"], color='#e11d48', linewidth=2.2, label='Persisters (High Inf)')
         
-        # Twin axis for drug concentration
+        # Vertical line for critical sanctuary radius (r_crit)
+        ax4.axvline(sim_low.r_crit, color='#f59e0b', linestyle=':', linewidth=2.0,
+                    label=f'Sanctuary Boundary $r_{{crit}} \\approx {sim_low.r_crit:.0f}\\,\\mu$m')
+        
+        # Twin axis for cylindrical drug concentration K0
         ax4_twin = ax4.twinx()
-        ax4_twin.plot(x, snap_low["C"], color='#6b7280', linestyle='--', linewidth=1.8, label='Drug Gradient C(x)')
-        ax4_twin.set_ylabel('Local Drug Penetration C(x)', color='#6b7280', fontsize=10)
+        ax4_twin.plot(r, snap_low["C"], color='#6b7280', linestyle='--', linewidth=1.8, label=r'Bessel $K_0$ Decay $C(r)$')
+        ax4_twin.set_ylabel('Local Drug Penetration C(r) (nM)', color='#6b7280', fontsize=10)
         ax4_twin.tick_params(axis='y', labelcolor='#6b7280')
         ax4_twin.grid(False)
 
-    ax4.set_title('D. Spatial Sanctuary Profile at Month 36 (Cessation)', fontsize=12, fontweight='bold', pad=10)
-    ax4.set_xlabel(r'Distance from Capillary $x$ ($\mu$m)', fontsize=10)
+    ax4.set_title(f'D. Cylindrical Sanctuary Sleeve at Month 36 (Volume: {sim_low.sanctuary_volume_fraction*100:.1f}%)', fontsize=12, fontweight='bold', pad=10)
+    ax4.set_xlabel(r'Radial Distance from Vessel Wall $r$ ($\mu$m)', fontsize=10)
     ax4.set_ylabel('DTP Density at Month 36', fontsize=10)
     ax4.legend(loc='upper left', frameon=True, fontsize=9)
 
     plt.tight_layout()
-    output_png = '/home/luca/inflammatory-onco-physics/figure_1_bifurcation.png'
+    output_png = REPO_ROOT / "figure_1_bifurcation.png"
     plt.savefig(output_png, bbox_inches='tight')
     plt.close()
     print(f"[✔] Simulation complete. Figure saved at: {output_png}")
