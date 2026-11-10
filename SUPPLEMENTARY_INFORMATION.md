@@ -6,7 +6,7 @@ $^{1}$Department of Clinical Medicine and Surgery, School of Medicine and Surger
 $^{2}$Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy  
 **Corresponding Author:** Luca Celebrano, MD Candidate (`l.celebrano@studenti.unina.it`), ORCID: `0009-0007-0931-3555`  
 **Target Category:** Supplementary Appendix / Translational Oncology Monograph  
-**Open Code & Data Repository:** `https://github.com/Lukecele/spatial-continuum-oncology`  
+**Open Code & Data Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
 **Persistent Archive:** DOI: [10.5281/zenodo.14050212](https://doi.org/10.5281/zenodo.14050212)  
 
 ---
