@@ -1,0 +1,34 @@
+{
+  "title": "A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients",
+  "description": "Comprehensive open-access code, biophysical continuum reaction-diffusion models, survival analysis pipelines, and supplementary materials for the study: 'A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients'. Evaluated across 11 clinical cohorts (N = 3,461) including MSKCC targeted TKI, real-world surgical cohorts with raw CBC and inflammatory biomarkers, TCGA pan-cancer, and blinded negative controls.",
+  "upload_type": "software",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "creators": [
+    {
+      "name": "Celebrano, Luca",
+      "affiliation": "Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Naples, Italy; Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy",
+      "orcid": "0009-0007-0931-3555"
+    }
+  ],
+  "keywords": [
+    "mathematical oncology",
+    "reaction-diffusion",
+    "pharmacological sanctuary",
+    "Bessel K0",
+    "Volterra memory functional",
+    "ctDNA lead time",
+    "minimal residual disease",
+    "osimertinib",
+    "ADAURA",
+    "PEGASUS",
+    "REMARK guidelines",
+    "systemic inflammation",
+    "survival analysis"
+  ],
+  "communities": [
+    {
+      "identifier": "zenodo"
+    }
+  ]
+}
