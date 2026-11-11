@@ -1,6 +1,7 @@
 # A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24118328.svg)](https://doi.org/10.5281/zenodo.24118328)
+[![YouTube Shorts](https://img.shields.io/badge/YouTube_Shorts-Why_Cancers_Relapse-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
@@ -33,8 +34,14 @@ We reconcile this clinical paradox through a **continuum biophysical reaction-di
 
 ---
 
-## ⚡ Interactive Google Colab Notebook
+## ⚡ Interactive Google Colab Notebook & 3D Simulation
 
+### 🎬 Official 3D Simulation (YouTube Short)
+Watch the cinematic visualization of perivascular reaction-diffusion decay, persister cell dormancy in the DTP sanctuary sleeve, systemic cytokine awakening, and post-cessation ctDNA shedding:
+
+[![Watch on YouTube Shorts](https://img.shields.io/badge/YouTube_Shorts-Watch_3D_Simulation-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18)
+
+### 🚀 Google Colab (Pro T4 GPU)
 Run the complete biophysical solvers, Bessel $K_0$ radial simulations, and clinical survival regressions directly in your browser with zero local installation:
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
