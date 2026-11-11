@@ -17,6 +17,8 @@
 This repository provides the complete, open-access computational framework, biophysical continuous reaction-diffusion solvers, biostatistical survival pipelines, and clinical cohort matrices supporting the monograph:
 
 > **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients.* Springer Nature Submission / Zenodo Archive. [DOI: 10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328).
+> 
+> 📄 **Executive Memorandum:** A concise 4-page technical discussion memorandum is available directly in this repository: [`MEMORANDUM_ESPLORATIVO_IFOM.pdf`](MEMORANDUM_ESPLORATIVO_IFOM.pdf).
 
 ### The Biological Problem
 Adjuvant targeted therapies (e.g., third-generation EGFR-TKIs like osimertinib in the ADAURA trial) demonstrate profound disease-free survival (DFS) benefits during active administration, yet post-cessation survival trajectories exhibit a characteristic rebound recurrence within 12–18 months. 
@@ -52,6 +54,7 @@ inflammatory-onco-physics/
 ├── CITATION.cff                            # GitHub citation file format
 ├── LICENSE                                 # Creative Commons Attribution 4.0 International (CC-BY-4.0)
 ├── README.md                               # This documentation
+├── MEMORANDUM_ESPLORATIVO_IFOM.pdf         # 4-page Technical Discussion Memorandum (IFOM Molecular Oncology)
 ├── MANOSCRITTO_SPRINGER_NATURE_26_PAGINE.md # Master 26-page scientific monograph
 ├── SUPPLEMENTARY_INFORMATION.md            # Master 10-page supplementary information document
 ├── MANOSCRITTO_SPRINGER_NATURE_26_PAGINE.pdf # Compiled monograph PDF
