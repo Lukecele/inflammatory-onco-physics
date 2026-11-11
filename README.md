@@ -3,6 +3,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24118328.svg)](https://doi.org/10.5281/zenodo.24118328)
 [![YouTube Short Part 1](https://img.shields.io/badge/YouTube_Short-Part_1:_Sanctuaries-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18)
 [![YouTube Short Part 2](https://img.shields.io/badge/YouTube_Short-Part_2:_ctDNA_Breach-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/m5TXgQOB2WA)
+[![YouTube Short Part 3](https://img.shields.io/badge/YouTube_Short-Part_3:_Desmoplastic_Shield-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/o4tKdbQV9cU)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
@@ -37,12 +38,12 @@ We reconcile this clinical paradox through a **continuum biophysical reaction-di
 
 ## ⚡ Interactive Google Colab Notebook & 3D Simulation
 
-### 🎬 Official 3D Simulation Series (YouTube Shorts)
+### 🎬 Official 3D Simulation Series (YouTube Shorts Trilogy)
 
-| 🔴 **Part 1: Microvascular Sanctuaries** | 🔴 **Part 2: The Matrix Breach & ctDNA** |
-| :---: | :---: |
-| [![Part 1: Why Cancers Relapse](https://img.shields.io/badge/▶_Part_1-Why_Cancers_Relapse-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18) | [![Part 2: The Matrix Breach](https://img.shields.io/badge/▶_Part_2-The_Matrix_Breach-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/m5TXgQOB2WA) |
-| *Cylindrical Bessel $K_0$ drug decay, DTP sanctuary sleeve, cytokine awakening* | *Dense collagen pore cutoff ($\le 11$ nm), matrix remodeling, helical ctDNA entry* |
+| 🔴 **Part 1: Microvascular Sanctuaries** | 🔴 **Part 2: The Matrix Breach & ctDNA** | 🔴 **Part 3: The Desmoplastic Shield** |
+| :---: | :---: | :---: |
+| [![Part 1: Why Cancers Relapse](https://img.shields.io/badge/▶_Part_1-Why_Cancers_Relapse-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18) | [![Part 2: The Matrix Breach](https://img.shields.io/badge/▶_Part_2-The_Matrix_Breach-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/m5TXgQOB2WA) | [![Part 3: Desmoplastic Shield](https://img.shields.io/badge/▶_Part_3-Desmoplastic_Shield-red.svg?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/shorts/o4tKdbQV9cU) |
+| *Cylindrical Bessel $K_0$ drug decay, DTP sanctuary sleeve, cytokine awakening* | *Dense collagen pore cutoff ($\le 11$ nm), matrix remodeling, helical ctDNA entry* | *CAF biomechanical microvessel squeeze, arrested convection, dormant G₀/G₁ persisters* |
 
 ### 🚀 Google Colab (Pro T4 GPU)
 Run the complete biophysical solvers, Bessel $K_0$ radial simulations, and clinical survival regressions directly in your browser with zero local installation:
