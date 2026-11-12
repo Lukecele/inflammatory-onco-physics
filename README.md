@@ -1,5 +1,6 @@
 # A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients
 
+[![Research Square Preprint](https://img.shields.io/badge/Research_Square-10.21203%2Frs.3.rs--11695210%2Fv1-blue.svg)](https://doi.org/10.21203/rs.3.rs-11695210/v1)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24118328.svg)](https://doi.org/10.5281/zenodo.24118328)
 [![YouTube Short Part 1](https://img.shields.io/badge/YouTube_Short-Part_1:_Sanctuaries-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/2IxHC94_Z18)
 [![YouTube Short Part 2](https://img.shields.io/badge/YouTube_Short-Part_2:_ctDNA_Breach-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/m5TXgQOB2WA)
@@ -23,7 +24,7 @@
 
 This repository provides the complete, open-access computational framework, biophysical continuous reaction-diffusion solvers, biostatistical survival pipelines, and clinical cohort matrices supporting the monograph:
 
-> **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients.* Springer Nature Submission / Zenodo Archive. [DOI: 10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328).
+> **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients.* Springer Nature In Review / Research Square Preprint [DOI: 10.21203/rs.3.rs-11695210/v1](https://doi.org/10.21203/rs.3.rs-11695210/v1) & Zenodo Archive [DOI: 10.5281/zenodo.24118328](https://doi.org/10.5281/zenodo.24118328).
 >
 > 📄 **Executive Memorandum:** A concise 4-page technical discussion memorandum is available directly in this repository: [`MEMORANDUM_ESPLORATIVO_IFOM.pdf`](MEMORANDUM_ESPLORATIVO_IFOM.pdf).  
 > 📚 **Full Monograph:** The complete 26-page monograph is available as [`MANOSCRITTO_SPRINGER_NATURE_26_PAGINE.pdf`](MANOSCRITTO_SPRINGER_NATURE_26_PAGINE.pdf) with [`SUPPLEMENTARY_INFORMATION.pdf`](SUPPLEMENTARY_INFORMATION.pdf).
