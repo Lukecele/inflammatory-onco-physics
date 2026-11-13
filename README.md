@@ -12,9 +12,8 @@
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
-**Author:** Luca Celebrano<sup>1,2</sup>  
+**Author:** Luca Celebrano<sup>1</sup>  
 <sup>1</sup> Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Naples, Italy  
-<sup>2</sup> Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy  
 *Correspondence:* [l.celebrano@studenti.unina.it](mailto:l.celebrano@studenti.unina.it) / [luca.celebrano@gmail.com](mailto:luca.celebrano@gmail.com) | ORCID: [0009-0007-0931-3555](https://orcid.org/0009-0007-0931-3555)  
 *Research Hub:* [Luca's Cave (lucacelebrano.me)](https://lucacelebrano.me/)
 
@@ -184,18 +183,17 @@ Under the following terms:
 
 For scientific correspondence, collaboration, or clinical trial inquiries:
 - **Luca Celebrano, MD Candidate / Researcher**  
-  *Università degli Studi di Napoli Federico II*  
-  *Telethon Institute of Genetics and Medicine (TIGEM)*  
+  *Department of Clinical Medicine and Surgery, School of Medicine, Università degli Studi di Napoli Federico II*  
   Email: `l.celebrano@studenti.unina.it` | `luca.celebrano@gmail.com`
 
 ```bibtex
 @article{celebrano2026inflammatoryoncophysics,
   title={A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,461 Patients},
   author={Celebrano, Luca},
-  journal={Zenodo Archive / Springer Nature Submission},
+  journal={Research Square / Springer Nature In Review},
   year={2026},
-  doi={10.5281/zenodo.24118328},
-  url={https://doi.org/10.5281/zenodo.24118328},
-  institution={Department of Clinical Medicine and Surgery, Universita degli Studi di Napoli Federico II; Telethon Institute of Genetics and Medicine (TIGEM)}
+  doi={10.21203/rs.3.rs-11695210/v1},
+  url={https://doi.org/10.21203/rs.3.rs-11695210/v1},
+  institution={Department of Clinical Medicine and Surgery, Universita degli Studi di Napoli Federico II}
 }
 ```

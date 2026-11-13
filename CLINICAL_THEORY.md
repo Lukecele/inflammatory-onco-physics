@@ -2,7 +2,7 @@
 ## A Multi-Scale Biophysical Framework Coupling Routine Histopathology, Systemic Inflammation, and Clonal Persistence
 
 **Authors:** Luca Celebrano, Antigravity AI  
-**Affiliation:** School of Medicine, Università degli Studi di Napoli Federico II / TIGEM  
+**Affiliation:** School of Medicine, Università degli Studi di Napoli Federico II
 **Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
 **Status:** Working Monograph & Theoretical Architecture  
 **Date:** November 2026  

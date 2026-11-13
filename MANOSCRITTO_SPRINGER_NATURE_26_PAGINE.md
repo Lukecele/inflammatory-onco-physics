@@ -1,9 +1,8 @@
 # A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors:
 ## An Exploratory In Silico and Retrospective Multi-Cohort Analysis
 
-**Author:** Luca Celebrano, MD Candidate$^{1,2}$  
+**Author:** Luca Celebrano, MD Candidate$^{1}$  
 $^{1}$Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Via Sergio Pansini 5, 80131 Naples, Italy  
-$^{2}$Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy  
 
 **Corresponding Author:** Luca Celebrano, MD Candidate (`l.celebrano@studenti.unina.it`), ORCID: `0009-0007-0931-3555`  
 **Target Category:** Original Article / Translational Oncology Monograph (REMARK-Compliant)  
@@ -436,7 +435,7 @@ Not applicable. No individual personal identifying information or patient images
 The author declares no competing financial or non-financial interests.
 
 ### Funding
-This study was conducted as independent academic research within the Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, and the Telethon Institute of Genetics and Medicine (TIGEM). No external commercial sponsorship or pharmaceutical industry funding was received.
+This study was conducted as independent academic research within the Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II.
 
 ### Use of Generative Artificial Intelligence
 Generative artificial intelligence and agentic coding workflows (Antigravity AI) were utilized for code generation, statistical automation, formatting, and drafting assistance under the direct intellectual supervision and experimental direction of the author. In accordance with ICMJE guidelines, the author reviewed and verified all mathematical derivations, computational analyses, statistical outputs, and manuscript text, and assumes full scientific responsibility for the integrity of this work.

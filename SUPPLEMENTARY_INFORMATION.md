@@ -1,9 +1,8 @@
 # Supplementary Information: Extended Biophysical Derivations, Tables and REMARK Compliance Audit
 
 **Article Title:** A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors: An Exploratory In Silico and Retrospective Multi-Cohort Analysis  
-**Author:** Luca Celebrano, MD Candidate$^{1,2}$  
+**Author:** Luca Celebrano, MD Candidate$^{1}$  
 $^{1}$Department of Clinical Medicine and Surgery, School of Medicine and Surgery, Università degli Studi di Napoli Federico II, Naples, Italy  
-$^{2}$Telethon Institute of Genetics and Medicine (TIGEM), Pozzuoli, Italy  
 **Corresponding Author:** Luca Celebrano, MD Candidate (`l.celebrano@studenti.unina.it`), ORCID: `0009-0007-0931-3555`  
 **Target Category:** Supplementary Appendix / Translational Oncology Monograph  
 **Open Code & Data Repository:** `https://github.com/Lukecele/inflammatory-onco-physics`  
