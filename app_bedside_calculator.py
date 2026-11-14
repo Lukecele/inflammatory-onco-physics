@@ -9,6 +9,7 @@ Calibrated against MSKCC (N=604) and Surgical GI Blood (N=1,056) cohorts.
 """
 
 import sys
+import argparse
 import numpy as np
 
 def calculate_htbi(
@@ -111,23 +112,38 @@ def calculate_htbi(
         "phi_blood": phi_blood
     }
 
-if __name__ == "__main__":
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Bedside Clinical HTBI Decision Calculator (Host-Tumor Biophysical Index)"
+    )
+    parser.add_argument("--stage", type=int, default=2, help="Pathologic TNM Stage (1, 2, 3)")
+    parser.add_argument("--grade", type=int, default=3, help="Histological Grade (1, 2, 3)")
+    parser.add_argument("--nlr", type=float, default=4.2, help="Complete Blood Count NLR")
+    parser.add_argument("--crp", type=float, default=12.5, help="Serum hs-CRP (mg/L)")
+    parser.add_argument("--alb", type=float, default=34.0, help="Serum Albumin (g/L)")
+    parser.add_argument("--desmo", type=str, default="High", choices=["None", "Low", "Moderate", "High"], help="Stromal Desmoplasia")
+    parser.add_argument("--tils", type=float, default=8.0, help="Infiltrating TILs percentage")
+    parser.add_argument("--bmi", type=float, default=31.2, help="Body Mass Index (BMI)")
+    parser.add_argument("--smoking", type=str, default="Ever", choices=["Never", "Ever", "Current"], help="Smoking History")
+    parser.add_argument("--version", action="version", version="1.1.2")
+
+    args = parser.parse_args(argv)
+
     print("=" * 75)
     print(" BEDSIDE CLINICAL HTBI DECISION CALCULATOR")
     print(" Authors: Luca Celebrano, MD Candidate / Antigravity AI")
     print(" Calibrated on MSKCC (N=604) and Surgical GI Blood (N=1,056) Cohorts")
     print("=" * 75)
     
-    # Representative High-Risk Patient: Stage II, G3, Elevated NLR & hs-CRP, Dense Stroma
-    stage_in = 2
-    grade_in = 3
-    nlr_in = 4.2
-    crp_in = 12.5
-    alb_in = 34.0
-    desmo_in = "High"
-    tils_in = 8.0
-    bmi_in = 31.2
-    smoking_in = "Ever"
+    stage_in = args.stage
+    grade_in = args.grade
+    nlr_in = args.nlr
+    crp_in = args.crp
+    alb_in = args.alb
+    desmo_in = args.desmo
+    tils_in = args.tils
+    bmi_in = args.bmi
+    smoking_in = args.smoking
     
     res = calculate_htbi(
         stage_in, grade_in, nlr_in, crp_in, alb_in,
@@ -168,3 +184,6 @@ if __name__ == "__main__":
         print(" [✔] FAVORABLE HOST SOIL: Standard surgical resection / adjuvant therapy adequate.")
         print(" [>] Routine surveillance recommended.")
     print("=" * 75)
+
+if __name__ == "__main__":
+    main()
