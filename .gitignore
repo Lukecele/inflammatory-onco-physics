@@ -3,3 +3,4 @@ __pycache__/
 *.pyo
 repo_dump.txt
 .DS_Store
+*.egg-info/
