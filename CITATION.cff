@@ -6,12 +6,12 @@ authors:
     orcid: "https://orcid.org/0009-0007-0931-3555"
     affiliation: "Independent Researcher, Naples, Italy"
 title: "A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,443 Patients"
-version: 1.1.0
+version: 1.2.0
 identifiers:
   - type: doi
     value: "10.5281/zenodo.24118328"
     description: "Zenodo Archive"
-date-released: 2026-11-10
+date-released: 2026-11-20
 url: "https://github.com/Lukecele/inflammatory-onco-physics"
 repository-code: "https://github.com/Lukecele/inflammatory-onco-physics"
 keywords:
