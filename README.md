@@ -6,6 +6,7 @@
 [![YouTube Short Part 4](https://img.shields.io/badge/YouTube_Short-Part_4:_Antibody_Strike-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/9EMsP73WSho)
 [![YouTube Short Part 5](https://img.shields.io/badge/YouTube_Short-Part_5:_5.5M_Lead_Time-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/0HPGny83MRU)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24212810.svg)](https://doi.org/10.5281/zenodo.24212810)
 [![CI](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
