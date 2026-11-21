@@ -6,6 +6,8 @@
 [![YouTube Short Part 4](https://img.shields.io/badge/YouTube_Short-Part_4:_Antibody_Strike-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/9EMsP73WSho)
 [![YouTube Short Part 5](https://img.shields.io/badge/YouTube_Short-Part_5:_5.5M_Lead_Time-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/0HPGny83MRU)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
+[![Preprint: Research Square v2](https://img.shields.io/badge/Preprint-Research_Square_v2-blue.svg)](https://doi.org/10.21203/rs.3.rs-11695210/v2)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24212810.svg)](https://doi.org/10.5281/zenodo.24212810)
 [![CI](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -23,8 +25,10 @@ Independent Researcher, Naples, Italy
 
 This repository provides the complete, open-access computational framework, biophysical continuous reaction-diffusion solvers, biostatistical survival pipelines, and clinical cohort matrices supporting the monograph:
 
-> **Celebrano, L. (2026).** *A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,443 Patients.* Preprint Monograph, 2026.
->
+> **Celebrano, L. (2026).** *A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors: An Exploratory In Silico and Retrospective Multi-Cohort Analysis.*  
+> 📄 **Official Preprint (v2):** [Springer Nature Research Square (DOI: 10.21203/rs.3.rs-11695210/v2)](https://doi.org/10.21203/rs.3.rs-11695210/v2)  
+> 🏛️ **CERN Zenodo Concept Archive:** [DOI: 10.5281/zenodo.24118327](https://doi.org/10.5281/zenodo.24118327) | [DOI: 10.5281/zenodo.24212810](https://doi.org/10.5281/zenodo.24212810)  
+> 📦 **Bioconda Official Package:** [`bioconda::inflammatory-onco-physics`](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)  
 > 💻 **Open-Source Implementation:** Complete Python reaction-diffusion continuum solver, command-line entrypoint (`oncophysics-calc`), and Streamlit clinical simulation dashboard.
 
 ### The Biological Problem
@@ -183,10 +187,11 @@ For scientific correspondence, collaboration, or clinical trial inquiries:
 
 ```bibtex
 @article{celebrano2026inflammatoryoncophysics,
-  title={A Reaction-Diffusion Theory of Microvascular Pharmacological Sanctuaries and Inflammatory Pre-conditioning Explains Post-Adjuvant Relapse Dynamics Across 3,443 Patients},
+  title={A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors: An Exploratory In Silico and Retrospective Multi-Cohort Analysis},
   author={Celebrano, Luca},
-  journal={Open Computational Suite / Springer Nature In Review},
+  journal={Research Square Preprint (v2)},
   year={2026},
-      institution={Independent Research}
+  doi={10.21203/rs.3.rs-11695210/v2},
+  url={https://doi.org/10.21203/rs.3.rs-11695210/v2}
 }
 ```
