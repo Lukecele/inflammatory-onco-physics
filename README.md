@@ -180,11 +180,20 @@ Under the following terms:
 
 ---
 
+## ⚠️ In Silico Research & Medical Disclaimer
+
+This computational framework, simulation models, and associated software are strictly intended for **exploratory in silico biophysical research and academic hypothesis generation only**. 
+- They do **not** constitute medical advice, clinical recommendations, or diagnostic tools.
+- They are **not** intended for patient management, treatment selection, or clinical decision-making.
+- All statistical associations are exploratory and retrospective; they do not establish isolated causality.
+
+---
+
 ## 📬 Contact & Citation
 
-For scientific correspondence, collaboration, or clinical trial inquiries:
-- **Luca Celebrano, MD Candidate / Researcher**  
-  *Independent Researcher*  
+For scientific correspondence and academic inquiries:
+- **Luca Celebrano**  
+  *Independent Researcher, Naples, Italy*  
   Email: `luca.celebrano1@gmail.com` | `luca.celebrano@gmail.com`
 
 ```bibtex
