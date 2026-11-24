@@ -9,7 +9,7 @@
 [![Preprint: Research Square v2](https://img.shields.io/badge/Preprint-Research_Square_v2-blue.svg)](https://doi.org/10.21203/rs.3.rs-11695210/v2)
 [![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)
 [![bio.tools](https://img.shields.io/badge/bio.tools-inflammatory--onco--physics--v2-blue.svg)](https://bio.tools/inflammatory-onco-physics-v2)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24212810.svg)](https://doi.org/10.5281/zenodo.24212810)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.24393472-blue)](https://doi.org/10.5281/zenodo.24393472)
 [![CI](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![REMARK Compliant](https://img.shields.io/badge/REMARK-Compliant-success.svg)](REMARK_COMPLIANCE_REPORT.md)
@@ -28,7 +28,7 @@ This repository provides the complete, open-access computational framework, biop
 
 > **Celebrano, L. (2026).** *A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors: An Exploratory In Silico and Retrospective Multi-Cohort Analysis.*  
 > 📄 **Official Preprint (v2):** [Springer Nature Research Square (DOI: 10.21203/rs.3.rs-11695210/v2)](https://doi.org/10.21203/rs.3.rs-11695210/v2)  
-> 🏛️ **CERN Zenodo Concept Archive:** [DOI: 10.5281/zenodo.24118327](https://doi.org/10.5281/zenodo.24118327) | [DOI: 10.5281/zenodo.24212810](https://doi.org/10.5281/zenodo.24212810)  
+> 🏛️ **CERN Zenodo Concept Archive:** [DOI: 10.5281/zenodo.24118327](https://doi.org/10.5281/zenodo.24118327) | [DOI: 10.5281/zenodo.24212810](https://doi.org/10.5281/zenodo.24393472)  
 > 🧬 **ELIXIR bio.tools Registry:** [`biotools:inflammatory-onco-physics-v2`](https://bio.tools/inflammatory-onco-physics-v2)  
 > 📦 **Bioconda Official Package:** [`bioconda::inflammatory-onco-physics`](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)  
 > 💻 **Open-Source Implementation:** Complete Python reaction-diffusion continuum solver, command-line entrypoint (`oncophysics-calc`), and Streamlit clinical simulation dashboard.
