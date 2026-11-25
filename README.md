@@ -7,7 +7,8 @@
 [![YouTube Short Part 5](https://img.shields.io/badge/YouTube_Short-Part_5:_5.5M_Lead_Time-red.svg?logo=youtube&logoColor=white)](https://youtube.com/shorts/0HPGny83MRU)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Lukecele/inflammatory-onco-physics/blob/main/demo_inflammatory_onco_physics.ipynb)
 [![Preprint: Research Square v2](https://img.shields.io/badge/Preprint-Research_Square_v2-blue.svg)](https://doi.org/10.21203/rs.3.rs-11695210/v2)
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)
+[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](https://anaconda.org/bioconda/inflammatory-onco-physics)
+[![nf-core module](https://img.shields.io/badge/nf--core-inflammatoryoncophysics%2Fcalc-239660)](https://github.com/nf-core/modules/pull/13789)
 [![bio.tools](https://img.shields.io/badge/bio.tools-inflammatory--onco--physics--v2-blue.svg)](https://bio.tools/inflammatory-onco-physics-v2)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.24393472-blue)](https://doi.org/10.5281/zenodo.24393472)
 [![CI](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml/badge.svg)](https://github.com/Lukecele/inflammatory-onco-physics/actions/workflows/ci.yml)
@@ -22,13 +23,28 @@ Independent Researcher, Naples, Italy
 
 ---
 
+> [!TIP]
+> ⭐ **If you use `inflammatory-onco-physics` or the official `nf-core` module (`inflammatoryoncophysics/calc`) in your research, please consider giving this repository a Star on GitHub!**
+
+## ⚡ 10-Second Install & CLI Quickstart
+
+```bash
+# Install from Bioconda
+conda install -c bioconda inflammatory-onco-physics
+
+# Run per-sample biophysical sanctuary & HTBI risk calculation
+oncophysics-calc --stage 2 --grade 3 --nlr 4.2 --crp 12.5 --alb 34.0
+```
+
+---
+
 ## 📌 Overview & Scientific Scope
 
 This repository provides the complete, open-access computational framework, biophysical continuous reaction-diffusion solvers, biostatistical survival pipelines, and clinical cohort matrices supporting the monograph:
 
 > **Celebrano, L. (2026).** *A Multiscale Biophysical Reaction-Diffusion Framework Coupling Histological Architecture, Interstitial Transport, and Inflammatory Tension in Solid Tumors: An Exploratory In Silico and Retrospective Multi-Cohort Analysis.*  
 > 📄 **Official Preprint (v2):** [Springer Nature Research Square (DOI: 10.21203/rs.3.rs-11695210/v2)](https://doi.org/10.21203/rs.3.rs-11695210/v2)  
-> 🏛️ **CERN Zenodo Concept Archive:** [DOI: 10.5281/zenodo.24118327](https://doi.org/10.5281/zenodo.24118327) | [DOI: 10.5281/zenodo.24212810](https://doi.org/10.5281/zenodo.24393472)  
+> 🏛️ **CERN Zenodo Concept Archive:** [DOI: 10.5281/zenodo.24118327](https://doi.org/10.5281/zenodo.24118327) | [DOI: 10.5281/zenodo.24393472](https://doi.org/10.5281/zenodo.24393472)  
 > 🧬 **ELIXIR bio.tools Registry:** [`biotools:inflammatory-onco-physics-v2`](https://bio.tools/inflammatory-onco-physics-v2)  
 > 📦 **Bioconda Official Package:** [`bioconda::inflammatory-onco-physics`](https://bioconda.github.io/recipes/inflammatory-onco-physics/README.html)  
 > 💻 **Open-Source Implementation:** Complete Python reaction-diffusion continuum solver, command-line entrypoint (`oncophysics-calc`), and Streamlit clinical simulation dashboard.
